@@ -1,0 +1,583 @@
+<?xml version="1.0"?>
+<!DOCTYPE target SYSTEM "gdb-target.dtd">
+<target version="1.0">
+<feature name="org.gnu.gdb.nds32.core">
+<reg name="r0" bitsize="32" regnum="0" save-restore="yes" type="uint32" group="general"/>
+<reg name="r1" bitsize="32" regnum="1" save-restore="yes" type="uint32" group="general"/>
+<reg name="r2" bitsize="32" regnum="2" save-restore="yes" type="uint32" group="general"/>
+<reg name="r3" bitsize="32" regnum="3" save-restore="yes" type="uint32" group="general"/>
+<reg name="r4" bitsize="32" regnum="4" save-restore="yes" type="uint32" group="general"/>
+<reg name="r5" bitsize="32" regnum="5" save-restore="yes" type="uint32" group="general"/>
+<reg name="r6" bitsize="32" regnum="6" save-restore="yes" type="uint32" group="general"/>
+<reg name="r7" bitsize="32" regnum="7" save-restore="yes" type="uint32" group="general"/>
+<reg name="r8" bitsize="32" regnum="8" save-restore="yes" type="uint32" group="general"/>
+<reg name="r9" bitsize="32" regnum="9" save-restore="yes" type="uint32" group="general"/>
+<reg name="r10" bitsize="32" regnum="10" save-restore="yes" type="uint32" group="general"/>
+<reg name="r11" bitsize="32" regnum="11" save-restore="yes" type="uint32" group="general"/>
+<reg name="r12" bitsize="32" regnum="12" save-restore="yes" type="uint32" group="general"/>
+<reg name="r13" bitsize="32" regnum="13" save-restore="yes" type="uint32" group="general"/>
+<reg name="r14" bitsize="32" regnum="14" save-restore="yes" type="uint32" group="general"/>
+<reg name="r15" bitsize="32" regnum="15" save-restore="yes" type="uint32" group="general"/>
+<reg name="r16" bitsize="32" regnum="16" save-restore="yes" type="uint32" group="general"/>
+<reg name="r17" bitsize="32" regnum="17" save-restore="yes" type="uint32" group="general"/>
+<reg name="r18" bitsize="32" regnum="18" save-restore="yes" type="uint32" group="general"/>
+<reg name="r19" bitsize="32" regnum="19" save-restore="yes" type="uint32" group="general"/>
+<reg name="r20" bitsize="32" regnum="20" save-restore="yes" type="uint32" group="general"/>
+<reg name="r21" bitsize="32" regnum="21" save-restore="yes" type="uint32" group="general"/>
+<reg name="r22" bitsize="32" regnum="22" save-restore="yes" type="uint32" group="general"/>
+<reg name="r23" bitsize="32" regnum="23" save-restore="yes" type="uint32" group="general"/>
+<reg name="r24" bitsize="32" regnum="24" save-restore="yes" type="uint32" group="general"/>
+<reg name="r25" bitsize="32" regnum="25" save-restore="yes" type="uint32" group="general"/>
+<reg name="r26" bitsize="32" regnum="26" save-restore="yes" type="uint32" group="general"/>
+<reg name="r27" bitsize="32" regnum="27" save-restore="yes" type="uint32" group="general"/>
+<reg name="fp" bitsize="32" regnum="28" save-restore="yes" type="data_ptr" group="general"/>
+<reg name="gp" bitsize="32" regnum="29" save-restore="yes" type="data_ptr" group="general"/>
+<reg name="lp" bitsize="32" regnum="30" save-restore="yes" type="code_ptr" group="general"/>
+<reg name="sp" bitsize="32" regnum="31" save-restore="yes" type="data_ptr" group="general"/>
+<reg name="pc" bitsize="32" regnum="32" save-restore="yes" type="code_ptr" group="general"/>
+<reg name="lb" bitsize="32" regnum="37" save-restore="yes" type="uint32" group="general"/>
+<reg name="le" bitsize="32" regnum="38" save-restore="yes" type="uint32" group="general"/>
+<reg name="lc" bitsize="32" regnum="39" save-restore="yes" type="uint32" group="general"/>
+<reg name="itb" bitsize="32" regnum="40" save-restore="yes" type="uint32" group="general"/>
+<reg name="ifc_lp" bitsize="32" regnum="41" save-restore="yes" type="uint32" group="general"/>
+</feature>
+<feature name="org.gnu.gdb.nds32.system">
+
+<enum id="levels_type" size="4">
+<evalue name="low" value="0"/>
+<evalue name="high" value="1"/>
+</enum>
+<enum id="endian_type" size="4">
+<evalue name="Little Endian" value="0"/>
+<evalue name="Big Endian" value="1"/>
+</enum>
+
+<enum id="CPUID_type" size="4">
+<evalue name="N7" value="0x07"/>
+<evalue name="N8" value="0x08"/>
+<evalue name="N903" value="0x09"/>
+<evalue name="N1003" value="0x0A"/>
+<evalue name="N12" value="0x0C"/>
+<evalue name="N13" value="0x0D"/>
+<evalue name="N968" value="0x19"/>
+<evalue name="N1068" value="0x1A"/>
+<evalue name="E8" value="0xE8"/>
+<evalue name="S8" value="0xF8"/>
+</enum>
+
+<flags id="cr0_flags" size="4">
+<field name="PERF_EXT" start="0" end="0"/>
+<field name="16_EXT" start="1" end="1"/>
+<field name="PERF_EXT2" start="2" end="2"/>
+<field name="COP/FPU_EXT" start="3" end="3"/>
+<field name="STR_EXT" start="4" end="4"/>
+<field name="SA_EXT" start="5" end="5"/>
+<field name="ACE" start="6" end="6"/>
+</flags>
+<struct id="cr0_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="CFGID" start="0" end="15" type="cr0_flags"/>
+<field name="REV" start="16" end="23" type="uint32"/>
+<field name="CPUID" start="24" end="31" type="CPUID_type"/>
+</struct>
+
+<enum id="ISET_type" size="4">
+<evalue name="64" value="0"/>
+<evalue name="128" value="1"/>
+<evalue name="256" value="2"/>
+<evalue name="512" value="3"/>
+<evalue name="1024" value="4"/>
+<evalue name="2048" value="5"/>
+<evalue name="4096" value="6"/>
+<evalue name="Reserved" value="7"/>
+</enum>
+<enum id="IWAY_type" size="4">
+<evalue name="Direct-mapped" value="0"/>
+<evalue name="2 way" value="1"/>
+<evalue name="3 way" value="2"/>
+<evalue name="4 way" value="3"/>
+<evalue name="5 way" value="4"/>
+<evalue name="6 way" value="5"/>
+<evalue name="7 way" value="6"/>
+<evalue name="8 way" value="7"/>
+</enum>
+<enum id="ISZ_type" size="4">
+<evalue name="No cache" value="0"/>
+<evalue name="8 bytes" value="1"/>
+<evalue name="16 bytes" value="2"/>
+<evalue name="32 bytes" value="3"/>
+<evalue name="64 bytes" value="4"/>
+<evalue name="128 bytes" value="5"/>
+<evalue name="Reserved" value="6"/>
+<evalue name="Reserved" value="7"/>
+</enum>
+<struct id="cr1_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="ISET" start="0" end="2" type="ISET_type"/>
+<field name="IWAY" start="3" end="5" type="IWAY_type"/>
+<field name="ISZ" start="6" end="8" type="ISZ_type"/>
+<field name="ILCK" start="9" end="9" type="uint32"/>
+<field name="ILMB" start="10" end="12" type="uint32"/>
+<field name="BSAV" start="13" end="14" type="uint32"/>
+<field name="EXT" start="15" end="15" type="uint32"/>
+<field name="ULM_2BANK" start="16" end="16" type="uint32"/>
+</struct>
+<struct id="cr2_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="DSET" start="0" end="2" type="ISET_type"/>
+<field name="DWAY" start="3" end="5" type="IWAY_type"/>
+<field name="DSZ" start="6" end="8" type="ISZ_type"/>
+<field name="DLCK" start="9" end="9" type="uint32"/>
+<field name="DLMB" start="10" end="12" type="uint32"/>
+<field name="BSAV" start="13" end="14" type="uint32"/>
+<field name="EXT" start="15" end="15" type="uint32"/>
+<field name="ULM_2BANK" start="16" end="16" type="uint32"/>
+</struct>
+<enum id="MMPS_type" size="4">
+<evalue name="No memory management" value="0"/>
+<evalue name="Protection Unit" value="1"/>
+<evalue name="TLB MMU" value="2"/>
+<evalue name="Reserved" value="3"/>
+</enum>
+<enum id="TBS_type" size="4">
+<evalue name="4" value="0"/>
+<evalue name="8" value="1"/>
+<evalue name="16" value="2"/>
+<evalue name="32" value="3"/>
+<evalue name="64" value="4"/>
+<evalue name="128" value="5"/>
+<evalue name="256" value="6"/>
+<evalue name="Reserved" value="7"/>
+</enum>
+
+<flags id="cr3_flags" size="4">
+<field name="EP8MIN4" start="15" end="15"/>
+<field name="TBLCK" start="24" end="24"/>
+<field name="HPTWK" start="25" end="25"/>
+<field name="IVTB" start="28" end="28"/>
+<field name="VLPT" start="29" end="29"/>
+<field name="NTME" start="30" end="30"/>
+</flags>
+<struct id="cr3_type" size="4">
+<field name="" start="0" end="31" type="cr3_flags"/>
+<field name="MMPS" start="0" end="1" type="MMPS_type"/>
+<field name="MMPV" start="2" end="6" type="uint32"/>
+<field name="FATB" start="7" end="7" type="uint32"/>
+<field name="TBW" start="8" end="10" type="IWAY_type"/>
+<field name="TBS" start="11" end="13" type="TBS_type"/>
+<field name="EPSZ" start="16" end="23" type="uint32"/>
+<field name="DE" start="26" end="26" type="endian_type"/>
+<field name="NTPT" start="27" end="27" type="uint32"/>
+<field name="DRDE" start="31" end="31" type="endian_type"/>
+</struct>
+
+<flags id="cr4_flags" size="4">
+<field name="EDM" start="0" end="0"/>
+<field name="LMDMA" start="1" end="1"/>
+<field name="PFM" start="2" end="2"/>
+<field name="HSMP" start="3" end="3"/>
+<field name="TRACE" start="4" end="4"/>
+<field name="DIV" start="5" end="5"/>
+<field name="MAC" start="6" end="6"/>
+<field name="L2C" start="9" end="9"/>
+<field name="RDREG" start="10" end="10"/>
+<field name="ADR24" start="11" end="11"/>
+<field name="INTLC" start="12" end="12"/>
+<field name="NOD" start="16" end="16"/>
+<field name="IMV" start="17" end="17"/>
+<field name="IMR" start="18" end="18"/>
+<field name="IFC" start="19" end="19"/>
+<field name="MCU" start="20" end="20"/>
+<field name="EIT" start="24" end="24"/>
+<field name="ULM" start="25" end="25"/>
+<field name="PFT" start="26" end="26"/>
+<field name="HSP" start="27" end="27"/>
+</flags>
+<struct id="cr4_type" size="4">
+<field name="" start="0" end="31" type="cr4_flags"/>
+<field name="AUDIO" start="7" end="8" type="uint32"/>
+<field name="BASEV" start="13" end="15" type="uint32"/>
+<field name="SHADOW" start="21" end="23" type="uint32"/>
+<field name="MSC_EXT" start="30" end="31" type="uint32"/>
+</struct>
+<struct id="cr5_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="COREID" start="0" end="6" type="uint32"/>
+</struct>
+<flags id="cr6_flags" size="4">
+<field name="CP0EX" start="0" end="0"/>
+<field name="CP1EX" start="1" end="1"/>
+<field name="CP2EX" start="2" end="2"/>
+<field name="CP3EX" start="3" end="3"/>
+<field name="CP0ISFPU" start="31" end="31"/>
+</flags>
+<struct id="cr6_type" size="4">
+<field name="" start="0" end="31" type="cr6_flags"/>
+<field name="CPV" start="16" end="17" type="uint32"/>
+</struct>
+<enum id="DSPPF_type" size="4">
+<evalue name="No DSP ISA Extension" value="0"/>
+<evalue name="Basic profile of DSP ISA Extension" value="1"/>
+<evalue name="64-bit profile of DSP ISA Extension" value="2"/>
+<evalue name="Support DSP V2 instructions" value="3"/>
+</enum>
+<enum id="TLB_ECC_type" size="4">
+<evalue name="No parity/ECC support" value="0"/>
+<evalue name="Has parity support" value="1"/>
+<evalue name="Has ECC support" value="2"/>
+<evalue name="Reserved" value="3"/>
+</enum>
+<flags id="cr7_flags" size="4">
+<field name="ECC" start="2" end="2"/>
+<field name="ZOL" start="5" end="5"/>
+<field name="INT64" start="6" end="6"/>
+<field name="EINSN" start="7" end="7"/>
+</flags>
+<struct id="cr7_type" size="4">
+<field name="" start="0" end="31" type="cr7_flags"/>
+<field name="TLB_ECC" start="0" end="1" type="TLB_ECC_type"/>
+<field name="DSPPF" start="3" end="4" type="DSPPF_type"/>
+</struct>
+
+<flags id="ir0_flags" size="4">
+<field name="GIE" start="0" end="0"/>
+<field name="IT" start="6" end="6"/>
+<field name="DT" start="7" end="7"/>
+<field name="IME" start="8" end="8"/>
+<field name="DME" start="9" end="9"/>
+<field name="DEX" start="10" end="10"/>
+<field name="HSS" start="11" end="11"/>
+<field name="DRBE" start="12" end="12"/>
+<field name="AEN" start="13" end="13"/>
+<field name="WBNA" start="14" end="14"/>
+<field name="IFCON" start="15" end="15"/>
+<field name="OV" start="20" end="20"/>
+<field name="PFT_EN" start="21" end="21"/>
+</flags>
+<struct id="ir0_type" size="4">
+<field name="" start="0" end="31" type="ir0_flags"/>
+<field name="INTL" start="1" end="2" type="uint32"/>
+<field name="POM" start="3" end="4" type="uint32"/>
+<field name="BE" start="5" end="5" type="endian_type"/>
+<field name="CPL" start="16" end="18" type="uint32"/>
+</struct>
+<struct id="ir1_type" size="4">
+<field name="" start="0" end="31" type="ir0_flags"/>
+<field name="INTL" start="1" end="2" type="uint32"/>
+<field name="POM" start="3" end="4" type="uint32"/>
+<field name="BE" start="5" end="5" type="endian_type"/>
+<field name="CPL" start="16" end="18" type="uint32"/>
+<field name="SP_ADJ" start="19" end="19" type="uint32"/>
+</struct>
+
+<enum id="PROG_PRI_LVL_type" size="4">
+<evalue name="Fixed priority" value="0"/>
+<evalue name="Programmable priority" value="1"/>
+</enum>
+<enum id="NIVIC_type" size="4">
+<evalue name="6 interrupt input sources" value="0"/>
+<evalue name="2 interrupt input sources" value="1"/>
+<evalue name="10 interrupt input sources" value="2"/>
+<evalue name="16 interrupt input sources" value="3"/>
+<evalue name="24 interrupt input sources" value="4"/>
+<evalue name="32 interrupt input sources" value="5"/>
+<evalue name="Reserved" value="6"/>
+<evalue name="Reserved" value="7"/>
+</enum>
+<enum id="EVIC_type" size="4">
+<evalue name="Internal Vector Interrupt Controller mode" value="0"/>
+<evalue name="External Vector Interrupt Controller mode" value="1"/>
+</enum>
+<enum id="ESZ_type" size="4">
+<evalue name="4 Byte" value="0"/>
+<evalue name="16 Byte" value="1"/>
+<evalue name="64 Byte" value="2"/>
+<evalue name="256 Byte" value="3"/>
+</enum>
+<struct id="ir3_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="PROG_PRI_LVL" start="0" end="0" type="PROG_PRI_LVL_type"/>
+<field name="NIVIC" start="1" end="3" type="NIVIC_type"/>
+<field name="IVIC_VER" start="11" end="12" type="uint32"/>
+<field name="EVIC" start="13" end="13" type="EVIC_type"/>
+<field name="ESZ" start="14" end="15" type="ESZ_type"/>
+<field name="IVBASE" start="16" end="31" type="uint32"/>
+</struct>
+<struct id="ir6_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="ETYPE" start="0" end="3" type="uint32"/>
+<field name="INST" start="4" end="4" type="uint32"/>
+<field name="SWID" start="16" end="30" type="uint32"/>
+</struct>
+<struct id="ir8_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="BUSERR" start="31" end="31" type="uint32"/>
+</struct>
+<flags id="ir14_flags" size="4">
+<field name="SIM" start="16" end="16"/>
+<field name="ALZ" start="29" end="29"/>
+<field name="IDIVZE" start="30" end="30"/>
+<field name="DSSIM" start="31" end="31"/>
+</flags>
+<struct id="ir14_type" size="4">
+<field name="" start="0" end="31" type="ir14_flags"/>
+</struct>
+
+<enum id="D_type" size="4">
+<evalue name="4KB" value="0"/>
+<evalue name="8KB" value="1"/>
+</enum>
+<enum id="NTC_type" size="4">
+<evalue name="Non-cacheable/Non-coalesable" value="0"/>
+<evalue name="Non-cacheable/Coalesable" value="1"/>
+<evalue name="Cacheable/Write-Back" value="2"/>
+<evalue name="Cacheable/Write-Through" value="3"/>
+</enum>
+<struct id="mr0_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="D" start="0" end="0" type="D_type"/>
+<field name="NTC0" start="1" end="2" type="NTC_type"/>
+<field name="NTC1" start="3" end="4" type="NTC_type"/>
+<field name="NTC2" start="5" end="6" type="NTC_type"/>
+<field name="NTC3" start="7" end="8" type="NTC_type"/>
+<field name="TBALCK" start="9" end="9" type="uint32"/>
+<field name="MPZIU" start="10" end="10" type="uint32"/>
+<field name="NTM0" start="11" end="12" type="uint32"/>
+<field name="NTM1" start="13" end="14" type="uint32"/>
+<field name="NTM2" start="15" end="16" type="uint32"/>
+<field name="NTM3" start="17" end="18" type="uint32"/>
+<field name="DREE" start="19" end="19" type="uint32"/>
+</struct>
+<enum id="NV_type" size="4">
+<evalue name="HPTWK is enabled" value="0"/>
+<evalue name="HPTWK is disabled" value="1"/>
+</enum>
+<struct id="mr1_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="NV" start="0" end="0" type="NV_type"/>
+<field name="L1_PPT_BASE" start="12" end="31" type="uint32"/>
+</struct>
+<struct id="mr2_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="VPN" start="12" end="31" type="uint32"/>
+</struct>
+<flags id="mr3_flags" size="4">
+<field name="V" start="0" end="0"/>
+<field name="D" start="4" end="4"/>
+<field name="X" start="5" end="5"/>
+<field name="A" start="6" end="6"/>
+<field name="G" start="7" end="7"/>
+</flags>
+<struct id="mr3_type" size="4">
+<field name="" start="0" end="31" type="mr3_flags"/>
+<field name="M" start="1" end="3" type="uint32"/>
+<field name="C" start="8" end="10" type="uint32"/>
+<field name="PPN" start="12" end="31" type="uint32"/>
+</struct>
+
+<enum id="ACC_PSZ_type" size="4">
+<evalue name="4KB" value="0"/>
+<evalue name="8KB" value="1"/>
+<evalue name="16KB" value="2"/>
+<evalue name="64KB" value="3"/>
+<evalue name="256KB" value="4"/>
+<evalue name="1MB" value="5"/>
+<evalue name="4MB" value="6"/>
+<evalue name="16MB" value="7"/>
+<evalue name="64MB" value="8"/>
+<evalue name="256MB" value="9"/>
+<evalue name="Reserved" value="10"/>
+<evalue name="Reserved" value="11"/>
+<evalue name="Reserved" value="12"/>
+<evalue name="Reserved" value="13"/>
+<evalue name="Reserved" value="14"/>
+<evalue name="Reserved" value="15"/>
+</enum>
+<struct id="mr4_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="ACC_PSZ" start="0" end="3" type="ACC_PSZ_type"/>
+<field name="CID" start="4" end="12" type="uint32"/>
+</struct>
+<struct id="mr5_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="EVPN" start="2" end="21" type="uint32"/>
+<field name="VLPTB" start="22" end="31" type="uint32"/>
+</struct>
+<enum id="ILMSZ_type" size="4">
+<evalue name="4KB" value="0"/>
+<evalue name="8KB" value="1"/>
+<evalue name="16KB" value="2"/>
+<evalue name="32KB" value="3"/>
+<evalue name="64KB" value="4"/>
+<evalue name="128KB" value="5"/>
+<evalue name="256KB" value="6"/>
+<evalue name="512KB" value="7"/>
+<evalue name="1024KB" value="8"/>
+<evalue name="1KB" value="9"/>
+<evalue name="2KB" value="10"/>
+<evalue name="2048KB" value="11"/>
+<evalue name="4096KB" value="12"/>
+<evalue name="Reserved" value="13"/>
+<evalue name="Reserved" value="14"/>
+<evalue name="0KB" value="15"/>
+</enum>
+<struct id="mr6_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="IEN" start="0" end="0" type="uint32"/>
+<field name="ILMSZ" start="1" end="4" type="ILMSZ_type"/>
+<field name="IBPA" start="10" end="31" type="uint32"/>
+</struct>
+<struct id="mr7_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="DEN" start="0" end="0" type="uint32"/>
+<field name="DLMSZ" start="1" end="4" type="ILMSZ_type"/>
+<field name="DBM" start="5" end="5" type="uint32"/>
+<field name="DBB" start="6" end="6" type="uint32"/>
+<field name="DBPA" start="10" end="31" type="uint32"/>
+</struct>
+<flags id="mr8_flags" size="4">
+<field name="IC_EN" start="0" end="0"/>
+<field name="DC_EN" start="1" end="1"/>
+<field name="ICALCK" start="2" end="2"/>
+<field name="DCALCK" start="3" end="3"/>
+<field name="DCCWF" start="4" end="4"/>
+<field name="DCPMW" start="5" end="5"/>
+</flags>
+<struct id="mr8_type" size="4">
+<field name="" start="0" end="31" type="mr8_flags"/>
+</struct>
+<struct id="mr9_type" size="4">
+<field name="" start="0" end="31"/>
+<field name="EN" start="0" end="0" type="uint32"/>
+<field name="RANGE" start="1" end="12" type="uint32"/>
+<field name="SADDR" start="20" end="31" type="uint32"/>
+</struct>
+
+<reg name="cr0" bitsize="32" regnum="42" save-restore="no" type="cr0_type" group="general"/>
+<reg name="cr1" bitsize="32" regnum="43" save-restore="no" type="cr1_type" group="general"/>
+<reg name="cr2" bitsize="32" regnum="44" save-restore="no" type="cr2_type" group="general"/>
+<reg name="cr3" bitsize="32" regnum="45" save-restore="no" type="cr3_type" group="general"/>
+<reg name="cr4" bitsize="32" regnum="46" save-restore="no" type="cr4_type" group="general"/>
+<reg name="cr5" bitsize="32" regnum="47" save-restore="no" type="cr5_type" group="general"/>
+<reg name="cr6" bitsize="32" regnum="48" save-restore="no" type="cr6_type" group="general"/>
+<reg name="cr7" bitsize="32" regnum="49" save-restore="no" type="cr7_type" group="general"/>
+<reg name="ir0" bitsize="32" regnum="50" save-restore="yes" type="ir0_type" group="general"/>
+<reg name="ir1" bitsize="32" regnum="51" save-restore="yes" type="ir1_type" group="general"/>
+<reg name="ir2" bitsize="32" regnum="52" save-restore="yes" type="ir1_type" group="general"/>
+<reg name="ir3" bitsize="32" regnum="53" save-restore="yes" type="ir3_type" group="general"/>
+<reg name="ir4" bitsize="32" regnum="54" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir5" bitsize="32" regnum="55" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir6" bitsize="32" regnum="56" save-restore="yes" type="ir6_type" group="general"/>
+<reg name="ir7" bitsize="32" regnum="57" save-restore="yes" type="ir6_type" group="general"/>
+<reg name="ir8" bitsize="32" regnum="58" save-restore="yes" type="ir8_type" group="general"/>
+<reg name="ir9" bitsize="32" regnum="59" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir10" bitsize="32" regnum="60" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir11" bitsize="32" regnum="61" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir12" bitsize="32" regnum="62" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir13" bitsize="32" regnum="63" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir14" bitsize="32" regnum="64" save-restore="yes" type="ir14_type" group="general"/>
+<reg name="ir15" bitsize="32" regnum="65" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir16" bitsize="32" regnum="66" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir17" bitsize="32" regnum="67" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir18" bitsize="32" regnum="68" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir19" bitsize="32" regnum="69" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir26" bitsize="32" regnum="76" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir27" bitsize="32" regnum="77" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir28" bitsize="32" regnum="78" save-restore="yes" type="uint32" group="general"/>
+<reg name="ir29" bitsize="32" regnum="79" save-restore="yes" type="uint32" group="general"/>
+<reg name="mr0" bitsize="32" regnum="87" save-restore="yes" type="mr0_type" group="general"/>
+<reg name="mr1" bitsize="32" regnum="88" save-restore="yes" type="mr1_type" group="general"/>
+<reg name="mr2" bitsize="32" regnum="89" save-restore="yes" type="mr2_type" group="general"/>
+<reg name="mr3" bitsize="32" regnum="90" save-restore="yes" type="mr3_type" group="general"/>
+<reg name="mr4" bitsize="32" regnum="91" save-restore="yes" type="mr4_type" group="general"/>
+<reg name="mr6" bitsize="32" regnum="93" save-restore="yes" type="mr6_type" group="general"/>
+<reg name="mr7" bitsize="32" regnum="94" save-restore="yes" type="mr7_type" group="general"/>
+<reg name="mr8" bitsize="32" regnum="95" save-restore="yes" type="mr8_type" group="general"/>
+<reg name="dr0" bitsize="32" regnum="99" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr1" bitsize="32" regnum="100" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr2" bitsize="32" regnum="101" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr3" bitsize="32" regnum="102" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr4" bitsize="32" regnum="103" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr5" bitsize="32" regnum="104" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr6" bitsize="32" regnum="105" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr7" bitsize="32" regnum="106" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr8" bitsize="32" regnum="107" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr9" bitsize="32" regnum="108" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr10" bitsize="32" regnum="109" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr11" bitsize="32" regnum="110" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr12" bitsize="32" regnum="111" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr13" bitsize="32" regnum="112" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr14" bitsize="32" regnum="113" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr15" bitsize="32" regnum="114" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr16" bitsize="32" regnum="115" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr17" bitsize="32" regnum="116" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr18" bitsize="32" regnum="117" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr19" bitsize="32" regnum="118" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr40" bitsize="32" regnum="139" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr41" bitsize="32" regnum="140" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr42" bitsize="32" regnum="141" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr43" bitsize="32" regnum="142" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr44" bitsize="32" regnum="143" save-restore="yes" type="uint32" group="general"/>
+<reg name="dr45" bitsize="32" regnum="144" save-restore="yes" type="uint32" group="general"/>
+<reg name="pfr0" bitsize="32" regnum="148" save-restore="yes" type="uint32" group="general"/>
+<reg name="pfr1" bitsize="32" regnum="149" save-restore="yes" type="uint32" group="general"/>
+<reg name="pfr2" bitsize="32" regnum="150" save-restore="yes" type="uint32" group="general"/>
+<reg name="pfr3" bitsize="32" regnum="151" save-restore="yes" type="uint32" group="general"/>
+<reg name="racr" bitsize="32" regnum="166" save-restore="yes" type="uint32" group="general"/>
+<reg name="fucpr" bitsize="32" regnum="167" save-restore="yes" type="uint32" group="general"/>
+<reg name="idr0" bitsize="32" regnum="168" save-restore="yes" type="uint32" group="general"/>
+<reg name="idr1" bitsize="32" regnum="169" save-restore="yes" type="uint32" group="general"/>
+</feature>
+<feature name="org.gnu.gdb.nds32.fpu">
+<reg name="fpcsr" bitsize="32" regnum="212" save-restore="yes" type="int" group="float"/>
+<reg name="fpcfg" bitsize="32" regnum="213" save-restore="yes" type="int" group="float"/>
+<reg name="fs0" bitsize="32" regnum="214" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs1" bitsize="32" regnum="215" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs2" bitsize="32" regnum="216" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs3" bitsize="32" regnum="217" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs4" bitsize="32" regnum="218" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs5" bitsize="32" regnum="219" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs6" bitsize="32" regnum="220" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs7" bitsize="32" regnum="221" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs8" bitsize="32" regnum="222" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs9" bitsize="32" regnum="223" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs10" bitsize="32" regnum="224" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs11" bitsize="32" regnum="225" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs12" bitsize="32" regnum="226" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs13" bitsize="32" regnum="227" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs14" bitsize="32" regnum="228" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs15" bitsize="32" regnum="229" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs16" bitsize="32" regnum="230" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs17" bitsize="32" regnum="231" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs18" bitsize="32" regnum="232" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs19" bitsize="32" regnum="233" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs20" bitsize="32" regnum="234" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs21" bitsize="32" regnum="235" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs22" bitsize="32" regnum="236" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs23" bitsize="32" regnum="237" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs24" bitsize="32" regnum="238" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs25" bitsize="32" regnum="239" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs26" bitsize="32" regnum="240" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs27" bitsize="32" regnum="241" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs28" bitsize="32" regnum="242" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs29" bitsize="32" regnum="243" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs30" bitsize="32" regnum="244" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fs31" bitsize="32" regnum="245" save-restore="yes" type="ieee_single" group="float"/>
+<reg name="fd0" bitsize="64" regnum="246" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd1" bitsize="64" regnum="247" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd2" bitsize="64" regnum="248" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd3" bitsize="64" regnum="249" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd4" bitsize="64" regnum="250" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd5" bitsize="64" regnum="251" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd6" bitsize="64" regnum="252" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd7" bitsize="64" regnum="253" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd8" bitsize="64" regnum="254" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd9" bitsize="64" regnum="255" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd10" bitsize="64" regnum="256" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd11" bitsize="64" regnum="257" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd12" bitsize="64" regnum="258" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd13" bitsize="64" regnum="259" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd14" bitsize="64" regnum="260" save-restore="yes" type="ieee_double" group="float"/>
+<reg name="fd15" bitsize="64" regnum="261" save-restore="yes" type="ieee_double" group="float"/>
+</feature>
+</target>

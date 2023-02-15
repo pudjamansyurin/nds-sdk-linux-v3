@@ -1,0 +1,16 @@
+iceman_debug0.log
+User : 99 1 command.c:546 command_print(): debug_level: 2
+Info : 130 1 transport.c:117 allow_transports(): only one transport option; autoselect 'aice_jtag'
+User : 154 1 command.c:546 command_print(): trst_and_srst separate srst_gates_jtag trst_push_pull srst_open_drain connect_deassert_srst
+User : 161 1 command.c:546 command_print(): adapter speed: RCLK - adaptive
+Info : 186 419 aice_apis.c:945 aice_get_info(): AICE version: hw_ver = 0x20002, fw_ver = 0x0, fpga_ver = 0x0
+Info : 188 419 aice_apis.c:949 aice_get_info(): AICE hardware features: 0xc0000004
+Info : 190 419 aice_apis.c:958 aice_get_info(): AICE batch data buffer size: 128 words
+Info : 197 420 aice_apis.c:2130 aice_open_device(): AICE initialization started
+Info : 207 422 aice_interface.c:313 aice_init(): AICE JTAG Interface ready
+Info : 219 425 core.c:1487 adapter_init(): RCLK (adaptive clock speed)
+Info : 407 427 nds32_cmd.c:953 handle_nds32_soft_reset_halt_command(): nds32.cpu0: soft-reset-halt: off
+Info : 419 427 nds32_cmd.c:879 handle_nds32_global_stop_command(): nds32.cpu0: global stop: off
+Info : 423 427 server.c:373 add_service(): Listening on port 6666 for tcl connections
+Info : 424 427 server.c:373 add_service(): Listening on port 4444 for telnet connections
+Info : 429 427 server.c:373 add_service(): Listening on port 2354 for burner connections

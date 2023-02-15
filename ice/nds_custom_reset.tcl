@@ -1,0 +1,3 @@
+source [find nds_custom_reset_func.tcl]
+parsing_targets
+reset_and_halt_all_harts

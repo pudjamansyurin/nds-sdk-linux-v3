@@ -1,0 +1,1456 @@
+<?xml version="1.0"?>
+<!DOCTYPE target SYSTEM "gdb-target.dtd">
+<target version="1.0">
+<feature name="org.gnu.gdb.riscv.csr">
+
+<enum id="levels_type" size="4">
+<evalue name="low" value="0"/>
+<evalue name="high" value="1"/>
+</enum>
+<enum id="endian_type" size="4">
+<evalue name="Little Endian" value="0"/>
+<evalue name="Big Endian" value="1"/>
+</enum>
+
+<enum id="mstatus_FS" size="4">
+<evalue name="Off" value="0"/>
+<evalue name="Initial" value="1"/>
+<evalue name="Clean" value="2"/>
+<evalue name="Dirty" value="3"/>
+</enum>
+<flags id="mstatus_flags" size="4">
+<field name="UIE" start="0" end="0"/>
+<field name="SIE" start="1" end="1"/>
+<field name="HIE" start="2" end="2"/>
+<field name="MIE" start="3" end="3"/>
+<field name="UPIE" start="4" end="4"/>
+<field name="SPIE" start="5" end="5"/>
+<field name="HPIE" start="6" end="6"/>
+<field name="MPIE" start="7" end="7"/>
+<field name="SPP" start="8" end="8"/>
+<field name="MPRV" start="17" end="17"/>
+<field name="SUM" start="18" end="18"/>
+<field name="MXR" start="19" end="19"/>
+<field name="TVM" start="20" end="20"/>
+<field name="TW" start="21" end="21"/>
+<field name="TSR" start="22" end="22"/>
+<field name="SD" start="31" end="31"/>
+</flags>
+<struct id="reg_mstatus" size="4">
+<field name="" start="0" end="31" type="mstatus_flags"/>
+<field name="HPP" start="9" end="10" type="uint32"/>
+<field name="MPP" start="11" end="12" type="uint32"/>
+<field name="FS" start="13" end="14" type="mstatus_FS"/>
+<field name="XS" start="15" end="16" type="mstatus_FS"/>
+<field name="VS" start="23" end="24" type="mstatus_FS"/>
+</struct>
+
+<flags id="mie_flags" size="4">
+<field name="USIE" start="0" end="0"/>
+<field name="SSIE" start="1" end="1"/>
+<field name="HSIE" start="2" end="2"/>
+<field name="MSIE" start="3" end="3"/>
+<field name="UTIE" start="4" end="4"/>
+<field name="STIE" start="5" end="5"/>
+<field name="HTIE" start="6" end="6"/>
+<field name="MTIE" start="7" end="7"/>
+<field name="UEIE" start="8" end="8"/>
+<field name="SEIE" start="9" end="9"/>
+<field name="HEIE" start="10" end="10"/>
+<field name="MEIE" start="11" end="11"/>
+<field name="IMECCI" start="16" end="16"/>
+<field name="BWEI" start="17" end="17"/>
+<field name="PMOVI" start="18" end="18"/>
+</flags>
+<struct id="reg_mie" size="4">
+<field name="" start="0" end="31" type="mie_flags"/>
+</struct>
+
+<flags id="mip_flags" size="4">
+<field name="USIP" start="0" end="0"/>
+<field name="SSIP" start="1" end="1"/>
+<field name="HSIP" start="2" end="2"/>
+<field name="MSIP" start="3" end="3"/>
+<field name="UTIP" start="4" end="4"/>
+<field name="STIP" start="5" end="5"/>
+<field name="HTIP" start="6" end="6"/>
+<field name="MTIP" start="7" end="7"/>
+<field name="UEIP" start="8" end="8"/>
+<field name="SEIP" start="9" end="9"/>
+<field name="HEIP" start="10" end="10"/>
+<field name="MEIP" start="11" end="11"/>
+<field name="IMECCI" start="16" end="16"/>
+<field name="BWEI" start="17" end="17"/>
+<field name="PMOVI" start="18" end="18"/>
+</flags>
+<struct id="reg_mip" size="4">
+<field name="" start="0" end="31" type="mip_flags"/>
+</struct>
+
+<flags id="mideleg_flags" size="4">
+<field name="USI" start="0" end="0"/>
+<field name="SSI" start="1" end="1"/>
+<field name="HSI" start="2" end="2"/>
+<field name="MSI" start="3" end="3"/>
+<field name="UTI" start="4" end="4"/>
+<field name="STI" start="5" end="5"/>
+<field name="HTI" start="6" end="6"/>
+<field name="MTI" start="7" end="7"/>
+<field name="UEI" start="8" end="8"/>
+<field name="SEI" start="9" end="9"/>
+<field name="HEI" start="10" end="10"/>
+<field name="MEI" start="11" end="11"/>
+</flags>
+<struct id="reg_mideleg" size="4">
+<field name="" start="0" end="31" type="mideleg_flags"/>
+</struct>
+
+<flags id="medeleg_flags" size="4">
+<field name="IAM" start="0" end="0"/>
+<field name="IAF" start="1" end="1"/>
+<field name="II" start="2" end="2"/>
+<field name="B" start="3" end="3"/>
+<field name="LAM" start="4" end="4"/>
+<field name="LAF" start="5" end="5"/>
+<field name="SAM" start="6" end="6"/>
+<field name="SAF" start="7" end="7"/>
+<field name="UEC" start="8" end="8"/>
+<field name="SEC" start="9" end="9"/>
+<field name="IPF" start="12" end="12"/>
+<field name="LPF" start="13" end="13"/>
+<field name="SPF" start="15" end="15"/>
+</flags>
+<struct id="reg_medeleg" size="4">
+<field name="" start="0" end="31" type="medeleg_flags"/>
+</struct>
+
+<struct id="reg_mtvec" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="base" start="2" end="31" type="uint32"/>
+</struct>
+
+<enum id="mcause_exceptioncode" size="4">
+<evalue name="Instruction address misaligned / User software interrupt" value="0"/>
+<evalue name="Instruction access fault / Supervisor software interrupt" value="1"/>
+<evalue name="Illegal instruction" value="2"/>
+<evalue name="Breakpoint / Machine software interrupt" value="3"/>
+<evalue name="Load address misaligned / User timer interrupt" value="4"/>
+<evalue name="Load access fault / Supervisor timer interrupt" value="5"/>
+<evalue name="Store/AMO address misaligned" value="6"/>
+<evalue name="Store/AMO access fault / Machine timer interrupt" value="7"/>
+<evalue name="Environment call from U-mode / User external interrupt" value="8"/>
+<evalue name="Environment call from S-mode / Supervisor external interrupt" value="9"/>
+<evalue name="Environment call from M-mode / Machine external interrupt" value="11"/>
+<evalue name="Instruction page fault" value="12"/>
+<evalue name="Load page fault" value="13"/>
+<evalue name="Store/AMO page fault" value="15"/>
+<evalue name="Slave port ECC error interrupt (M-mode)" value="16"/>
+<evalue name="Bus read/write transaction error interrupt (M-mode)" value="17"/>
+<evalue name="Performance monitor overflow interrupt(M-mode)" value="18"/>
+<evalue name="Stack overflow exception" value="32"/>
+<evalue name="Stack underflow exception" value="33"/>
+<evalue name="Andes Custom Extension exception." value="40"/>
+<evalue name="Andes Custom Extension exception." value="41"/>
+<evalue name="Andes Custom Extension exception." value="42"/>
+<evalue name="Andes Custom Extension exception." value="43"/>
+<evalue name="Andes Custom Extension exception." value="44"/>
+<evalue name="Andes Custom Extension exception." value="45"/>
+<evalue name="Andes Custom Extension exception." value="46"/>
+<evalue name="Andes Custom Extension exception." value="47"/>
+<evalue name="Slave port ECC error interrupt (S-mode)" value="272"/>
+<evalue name="Bus read/write transaction error interrupt (S-mode)" value="273"/>
+<evalue name="Performance monitor overflow interrupt(S-mode)" value="274"/>
+</enum>
+<flags id="mcause_flags" size="4">
+<field name="Interrupt" start="31" end="31"/>
+</flags>
+<struct id="reg_mcause" size="4">
+<field name="" start="0" end="31" type="mcause_flags"/>
+<field name="exceptioncode" start="0" end="30" type="mcause_exceptioncode"/>
+</struct>
+
+<enum id="misa_base" size="4">
+<evalue name="32" value="1"/>
+<evalue name="64" value="2"/>
+<evalue name="128" value="3"/>
+</enum>
+<flags id="misa_flags" size="4">
+<field name="A" start="0" end="0"/>
+<field name="B" start="1" end="1"/>
+<field name="C" start="2" end="2"/>
+<field name="D" start="3" end="3"/>
+<field name="E" start="4" end="4"/>
+<field name="F" start="5" end="5"/>
+<field name="G" start="6" end="6"/>
+<field name="H" start="7" end="7"/>
+<field name="I" start="8" end="8"/>
+<field name="J" start="9" end="9"/>
+<field name="K" start="10" end="10"/>
+<field name="L" start="11" end="11"/>
+<field name="M" start="12" end="12"/>
+<field name="N" start="13" end="13"/>
+<field name="O" start="14" end="14"/>
+<field name="P" start="15" end="15"/>
+<field name="Q" start="16" end="16"/>
+<field name="R" start="17" end="17"/>
+<field name="S" start="18" end="18"/>
+<field name="T" start="19" end="19"/>
+<field name="U" start="20" end="20"/>
+<field name="V" start="21" end="21"/>
+<field name="W" start="22" end="22"/>
+<field name="X" start="23" end="23"/>
+<field name="Y" start="24" end="24"/>
+<field name="Z" start="25" end="25"/>
+</flags>
+<struct id="reg_misa" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="extensions" start="0" end="25" type="misa_flags"/>
+<field name="mxl" start="30" end="31" type="misa_base"/>
+</struct>
+
+<enum id="marchid_coretype" size="4">
+<evalue name="N" value="0"/>
+<evalue name="D" value="1"/>
+<evalue name="E" value="2"/>
+<evalue name="S" value="3"/>
+<evalue name="NX" value="8"/>
+<evalue name="DX" value="9"/>
+<evalue name="EX" value="10"/>
+<evalue name="SX" value="11"/>
+</enum>
+<struct id="reg_marchid" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="microid" start="0" end="11" type="uint32"/>
+<field name="coretype" start="12" end="15" type="marchid_coretype"/>
+<field name="commercial" start="31" end="31" type="uint32"/>
+</struct>
+
+<struct id="reg_mimpid" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="ext" start="0" end="3" type="uint32"/>
+<field name="minor" start="4" end="7" type="uint32"/>
+<field name="major" start="8" end="15" type="uint32"/>
+</struct>
+
+<enum id="tdata1_dmode" size="4">
+<evalue name="Both Debug mode and Machine mode can write the TDATA registers" value="0"/>
+<evalue name="Only Debug mode can write the TDATA registers" value="1"/>
+</enum>
+<enum id="tdata1_type" size="4">
+<evalue name="No trigger" value="0"/>
+<evalue name="Legacy SiFive address match trigger" value="1"/>
+<evalue name="Address/data match trigger" value="2"/>
+<evalue name="Instruction count trigger" value="3"/>
+<evalue name="The trigger is an interrupt trigger" value="4"/>
+<evalue name="The trigger is an exception trigger" value="5"/>
+<evalue name="Trigger exists, but is not currently available." value="15"/>
+</enum>
+<struct id="reg_tdata1" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="data" start="0" end="26" type="uint32"/>
+<field name="dmode" start="27" end="27" type="tdata1_dmode"/>
+<field name="type" start="28" end="31" type="tdata1_type"/>
+</struct>
+
+<struct id="reg_tinfo" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="info" start="0" end="15" type="uint32"/>
+</struct>
+
+<enum id="dcsr_xdebugver" size="4">
+<evalue name="No Debug Mode support." value="0"/>
+<evalue name="Debug Mode is supported." value="4"/>
+<evalue name="There is external debug support." value="15"/>
+</enum>
+<enum id="dcsr_cause" size="4">
+<evalue name="A software breakpoint(ebreak instruction) was hit.(priority 3) This is also the reason for exception redirection to Debug Mode." value="1"/>
+<evalue name="The Trigger Module caused a breakpoint exception.(priority 4)" value="2"/>
+<evalue name="The debugger requested entry to Debug Mode using haltreg.(priority 1)" value="3"/>
+<evalue name="The hart single stepped because step was set.(priority 0)" value="4"/>
+<evalue name="The hart halted directly out of reset due to resethaltreg. It is also acceptable to report 3 when this happens.(priority 2)" value="5"/>
+</enum>
+<enum id="dcsr_prv" size="4">
+<evalue name="User" value="0"/>
+<evalue name="Supervisor" value="1"/>
+<evalue name="Machine" value="3"/>
+</enum>
+<flags id="dcsr_flags" size="4">
+<field name="step" start="2" end="2"/>
+<field name="nmip" start="3" end="3"/>
+<field name="mprven" start="4" end="4"/>
+<field name="stoptime" start="9" end="9"/>
+<field name="stopcount" start="10" end="10"/>
+<field name="stepie" start="11" end="11"/>
+<field name="ebreaku" start="12" end="12"/>
+<field name="ebreaks" start="13" end="13"/>
+<field name="ebreakm" start="15" end="15"/>
+</flags>
+<struct id="reg_dcsr" size="4">
+<field name="" start="0" end="31" type="dcsr_flags"/>
+<field name="prv" start="0" end="1" type="dcsr_prv"/>
+<field name="cause" start="6" end="8" type="dcsr_cause"/>
+<field name="xdebugver" start="28" end="31" type="dcsr_xdebugver"/>
+</struct>
+
+<flags id="fflags_flags" size="4">
+<field name="NX" start="0" end="0"/>
+<field name="UF" start="1" end="1"/>
+<field name="OF" start="2" end="2"/>
+<field name="DZ" start="3" end="3"/>
+<field name="NV" start="4" end="4"/>
+</flags>
+<struct id="reg_fflags" size="4">
+<field name="" start="0" end="31" type="fflags_flags"/>
+</struct>
+
+<enum id="frm_frm" size="4">
+<evalue name="RNE" value="0"/>
+<evalue name="RTZ" value="1"/>
+<evalue name="RDM" value="2"/>
+<evalue name="RUP" value="3"/>
+<evalue name="RMM" value="4"/>
+</enum>
+<struct id="reg_frm" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="frm" start="0" end="2" type="frm_frm"/>
+</struct>
+
+<struct id="reg_fcsr" size="4">
+<field name="" start="0" end="31" type="fflags_flags"/>
+<field name="frm" start="5" end="7" type="frm_frm"/>
+</struct>
+
+<enum id="micm_cfg_ilm_xonly" size="4">
+<evalue name="ILM is not execute-only" value="0"/>
+<evalue name="ILM is execute-only" value="1"/>
+</enum>
+<enum id="micm_cfg_ulm_2bank" size="4">
+<evalue name="Only 1 memory bank" value="0"/>
+<evalue name="2 memory banks" value="1"/>
+</enum>
+<enum id="micm_cfg_ilmsz" size="4">
+<evalue name="0 Byte" value="0"/>
+<evalue name="1 KiB" value="1"/>
+<evalue name="2 KiB" value="2"/>
+<evalue name="4 KiB" value="3"/>
+<evalue name="8 KiB" value="4"/>
+<evalue name="16 KiB" value="5"/>
+<evalue name="32 KiB" value="6"/>
+<evalue name="64 KiB" value="7"/>
+<evalue name="128 KiB" value="8"/>
+<evalue name="256 KiB" value="9"/>
+<evalue name="512 KiB" value="10"/>
+<evalue name="1 MiB" value="11"/>
+<evalue name="2 MiB" value="12"/>
+<evalue name="4 MiB" value="13"/>
+<evalue name="8 MiB" value="14"/>
+<evalue name="16 MiB" value="15"/>
+<evalue name="32 MiB" value="16"/>
+<evalue name="64 MiB" value="17"/>
+<evalue name="128 MiB" value="18"/>
+<evalue name="256 MiB" value="19"/>
+<evalue name="512 MiB" value="20"/>
+</enum>
+<enum id="micm_cfg_ilmb" size="4">
+<evalue name="No ILMB exists." value="0"/>
+<evalue name="One ILMB exists." value="1"/>
+</enum>
+<enum id="micm_cfg_ic_ecc" size="4">
+<evalue name="No parity/ECC support" value="0"/>
+<evalue name="Has parity support" value="1"/>
+<evalue name="Has ECC support" value="2"/>
+</enum>
+<enum id="micm_cfg_ilck" size="4">
+<evalue name="No locking support" value="0"/>
+<evalue name="With locking support" value="1"/>
+</enum>
+<enum id="micm_cfg_isz" size="4">
+<evalue name="No Icache" value="0"/>
+<evalue name="8 bytes" value="1"/>
+<evalue name="16 bytes" value="2"/>
+<evalue name="32 bytes" value="3"/>
+<evalue name="64 bytes" value="4"/>
+<evalue name="128 bytes" value="5"/>
+</enum>
+<enum id="micm_cfg_iway" size="4">
+<evalue name="Direct-mapped" value="0"/>
+<evalue name="2 way" value="1"/>
+<evalue name="3 way" value="2"/>
+<evalue name="4 way" value="3"/>
+<evalue name="5 way" value="4"/>
+<evalue name="6 way" value="5"/>
+<evalue name="7 way" value="6"/>
+<evalue name="8 way" value="7"/>
+</enum>
+<enum id="micm_cfg_iset" size="4">
+<evalue name="64" value="0"/>
+<evalue name="128" value="1"/>
+<evalue name="256" value="2"/>
+<evalue name="512" value="3"/>
+<evalue name="1024" value="4"/>
+<evalue name="2048" value="5"/>
+<evalue name="4096" value="6"/>
+</enum>
+<struct id="reg_micm_cfg" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="iset" start="0" end="2" type="micm_cfg_iset"/>
+<field name="iway" start="3" end="5" type="micm_cfg_iway"/>
+<field name="isz" start="6" end="8" type="micm_cfg_isz"/>
+<field name="ilck" start="9" end="9" type="micm_cfg_ilck"/>
+<field name="ic_ecc" start="10" end="11" type="micm_cfg_ic_ecc"/>
+<field name="ilmb" start="12" end="14" type="micm_cfg_ilmb"/>
+<field name="ilmsz" start="15" end="19" type="micm_cfg_ilmsz"/>
+<field name="ulm_2bank" start="20" end="20" type="micm_cfg_ulm_2bank"/>
+<field name="ilm_ecc" start="21" end="22" type="micm_cfg_ic_ecc"/>
+<field name="ilm_xonly" start="23" end="23" type="micm_cfg_ilm_xonly"/>
+<field name="seth" start="24" end="24" type="uint32"/>
+</struct>
+
+<enum id="mdcm_cfg_dlmb" size="4">
+<evalue name="No DLMB exists" value="0"/>
+<evalue name="One DLMB exists and no double buffer mode support." value="1"/>
+<evalue name="One DLMB exists and with double buffer mode support." value="2"/>
+</enum>
+<enum id="mdcm_cfg_dsz" size="4">
+<evalue name="No Dcache" value="0"/>
+<evalue name="8 bytes" value="1"/>
+<evalue name="16 bytes" value="2"/>
+<evalue name="32 bytes" value="3"/>
+<evalue name="64 bytes" value="4"/>
+<evalue name="128 bytes" value="5"/>
+</enum>
+<struct id="reg_mdcm_cfg" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="dset" start="0" end="2" type="micm_cfg_iset"/>
+<field name="dway" start="3" end="5" type="micm_cfg_iway"/>
+<field name="dsz" start="6" end="8" type="mdcm_cfg_dsz"/>
+<field name="dlck" start="9" end="9" type="micm_cfg_ilck"/>
+<field name="dc_ecc" start="10" end="11" type="micm_cfg_ic_ecc"/>
+<field name="dlmb" start="12" end="14" type="mdcm_cfg_dlmb"/>
+<field name="dlmsz" start="15" end="19" type="micm_cfg_ilmsz"/>
+<field name="ulm_2bank" start="20" end="20" type="micm_cfg_ulm_2bank"/>
+<field name="dlm_ecc" start="21" end="22" type="micm_cfg_ic_ecc"/>
+<field name="seth" start="24" end="24" type="uint32"/>
+</struct>
+
+<enum id="mmsc_cfg_addpmc" size="4">
+<evalue name="4 additional counters" value="0"/>
+<evalue name="3 additional counters" value="1"/>
+<evalue name="2 additional counters" value="2"/>
+<evalue name="1 additional counters" value="3"/>
+<evalue name="0 additional counters" value="4"/>
+<evalue name="5 additional counters" value="5"/>
+<evalue name="6 additional counters" value="6"/>
+<evalue name="7 additional counters" value="7"/>
+<evalue name="8 additional counters" value="8"/>
+<evalue name="9 additional counters" value="9"/>
+<evalue name="10 additional counters" value="10"/>
+<evalue name="11 additional counters" value="11"/>
+<evalue name="12 additional counters" value="12"/>
+<evalue name="13 additional counters" value="13"/>
+<evalue name="14 additional counters" value="14"/>
+<evalue name="15 additional counters" value="15"/>
+<evalue name="16 additional counters" value="16"/>
+<evalue name="17 additional counters" value="17"/>
+<evalue name="18 additional counters" value="18"/>
+<evalue name="19 additional counters" value="19"/>
+<evalue name="20 additional counters" value="20"/>
+<evalue name="21 additional counters" value="21"/>
+<evalue name="22 additional counters" value="22"/>
+<evalue name="23 additional counters" value="23"/>
+<evalue name="24 additional counters" value="24"/>
+<evalue name="25 additional counters" value="25"/>
+<evalue name="26 additional counters" value="26"/>
+<evalue name="27 additional counters" value="27"/>
+<evalue name="28 additional counters" value="28"/>
+<evalue name="29 additional counters" value="29"/>
+</enum>
+<enum id="mmsc_cfg_excslvl" size="4">
+<evalue name="No additional save level" value="0"/>
+<evalue name="Additional save level is 1" value="1"/>
+<evalue name="Additional save level is 2" value="2"/>
+</enum>
+<flags id="mmsc_cfg_flags" size="4">
+<field name="ecc" start="0" end="0"/>
+<field name="ecd" start="3" end="3"/>
+<field name="pft" start="4" end="4"/>
+<field name="hsp" start="5" end="5"/>
+<field name="ace" start="6" end="6"/>
+<field name="vplic" start="12" end="12"/>
+<field name="ev5pe" start="13" end="13"/>
+<field name="lmslvp" start="14" end="14"/>
+<field name="pmnds" start="15" end="15"/>
+<field name="cctlcsr" start="16" end="16"/>
+<field name="efhw" start="17" end="17"/>
+<field name="nopmc" start="22" end="22"/>
+<field name="spe_aft" start="23" end="23"/>
+<field name="esleep" start="24" end="24"/>
+<field name="ppi" start="25" end="25"/>
+<field name="fio" start="26" end="26"/>
+<field name="clic" start="27" end="27"/>
+<field name="eclic" start="28" end="28"/>
+<field name="edsp" start="29" end="29"/>
+<field name="ppma" start="30" end="30"/>
+<field name="msc_ext" start="31" end="31"/>
+</flags>
+<struct id="reg_mmsc_cfg" size="4">
+<field name="" start="0" end="31" type="mmsc_cfg_flags"/>
+<field name="tlb_ecc" start="1" end="2" type="micm_cfg_ic_ecc"/>
+<field name="addpmc" start="7" end="11" type="mmsc_cfg_addpmc"/>
+<field name="vcctl" start="18" end="19" type="uint32"/>
+<field name="excslvl" start="20" end="21" type="mmsc_cfg_excslvl"/>
+</struct>
+
+<flags id="mmsc_cfg2_flags" size="4">
+<field name="bf16cvt" start="0" end="0"/>
+<field name="zfh" start="1" end="1"/>
+<field name="vl4" start="2" end="2"/>
+<field name="crashsave" start="3" end="3"/>
+<field name="veccfg" start="4" end="4"/>
+</flags>
+<struct id="reg_mmsc_cfg2" size="4">
+<field name="" start="0" end="31" type="mmsc_cfg2_flags"/>
+</struct>
+
+<enum id="mvec_cfg_mfsew" size="4">
+<evalue name="vector floating-point instructions are not supported." value="0"/>
+<evalue name="32" value="1"/>
+<evalue name="64" value="2"/>
+</enum>
+<enum id="mvec_cfg_misew" size="4">
+<evalue name="32" value="1"/>
+<evalue name="64" value="2"/>
+</enum>
+<enum id="mvec_cfg_mw" size="4">
+<evalue name="vlen" value="0"/>
+<evalue name="vlen div 2" value="1"/>
+<evalue name="vlen div 4" value="2"/>
+<evalue name="vlen div 8" value="3"/>
+<evalue name="vlen mul 2" value="4"/>
+<evalue name="vlen mul 4" value="5"/>
+</enum>
+<enum id="mvec_cfg_dw" size="4">
+<evalue name="vlen" value="0"/>
+<evalue name="vlen div 2" value="1"/>
+<evalue name="vlen div 4" value="2"/>
+<evalue name="vlen div 8" value="3"/>
+</enum>
+<enum id="mvec_cfg_vlen" size="4">
+<evalue name="64" value="0"/>
+<evalue name="128" value="1"/>
+<evalue name="256" value="2"/>
+<evalue name="512" value="3"/>
+<evalue name="1024" value="4"/>
+</enum>
+<flags id="mvec_cfg_flags" size="4">
+<field name="finv" start="18" end="18"/>
+</flags>
+<struct id="reg_mvec_cfg" size="4">
+<field name="" start="0" end="31" type="mvec_cfg_flags"/>
+<field name="ver" start="0" end="4" type="uint32"/>
+<field name="vlen" start="5" end="7" type="mvec_cfg_vlen"/>
+<field name="dw" start="8" end="10" type="mvec_cfg_dw"/>
+<field name="mw" start="11" end="13" type="mvec_cfg_mw"/>
+<field name="misew" start="14" end="15" type="mvec_cfg_misew"/>
+<field name="mfsew" start="16" end="17" type="mvec_cfg_mfsew"/>
+</struct>
+
+<flags id="mcrash_statesave_flags" size="4">
+<field name="mie" start="0" end="0"/>
+<field name="ppft_en" start="3" end="3"/>
+<field name="pdme" start="5" end="5"/>
+</flags>
+<struct id="reg_mcrash_statesave" size="4">
+<field name="" start="0" end="31" type="mcrash_statesave_flags"/>
+<field name="cp" start="1" end="2" type="mdcause_pm"/>
+<field name="ptype" start="6" end="7" type="mxstatus_typ"/>
+</struct>
+
+<enum id="milmb_eccen" size="4">
+<evalue name="Disable parity/ECC." value="0"/>
+<evalue name="Generate exceptions only on uncorrectable parity/ECC errors." value="2"/>
+<evalue name="Generate exceptions on any type of parity/ECC errors." value="3"/>
+</enum>
+<flags id="milmb_flags" size="4">
+<field name="ien" start="0" end="0"/>
+<field name="rwecc" start="3" end="3"/>
+</flags>
+<struct id="reg_milmb" size="4">
+<field name="" start="0" end="31" type="milmb_flags"/>
+<field name="eccen" start="1" end="2" type="milmb_eccen"/>
+<field name="base physical address" start="10" end="31" type="uint32"/>
+</struct>
+
+<flags id="mdlmb_flags" size="4">
+<field name="den" start="0" end="0"/>
+<field name="rwecc" start="3" end="3"/>
+</flags>
+<struct id="reg_mdlmb" size="4">
+<field name="" start="0" end="31" type="mdlmb_flags"/>
+<field name="eccen" start="1" end="2" type="milmb_eccen"/>
+<field name="base physical address" start="10" end="31" type="uint32"/>
+</struct>
+
+<enum id="mecc_code_ramid" size="4">
+<evalue name="Tag RAM of instruction cache" value="2"/>
+<evalue name="Data RAM of instruction cache" value="3"/>
+<evalue name="Tag RAM of data cache" value="4"/>
+<evalue name="Data RAM of data cache" value="5"/>
+<evalue name="Tag RAM of TLB" value="6"/>
+<evalue name="Data RAM of TLB" value="7"/>
+<evalue name="ILM" value="8"/>
+<evalue name="DLM" value="9"/>
+</enum>
+<flags id="mecc_code_flags" size="4">
+<field name="c" start="16" end="16"/>
+<field name="p" start="17" end="17"/>
+<field name="insn" start="22" end="22"/>
+</flags>
+<struct id="reg_mecc_code" size="4">
+<field name="" start="0" end="31" type="mecc_code_flags"/>
+<field name="code" start="0" end="6" type="uint32"/>
+<field name="ramid" start="18" end="21" type="mecc_code_ramid"/>
+</struct>
+
+<struct id="reg_mpft_ctl" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="t_level" start="4" end="7" type="uint32"/>
+<field name="fast_int" start="8" end="8" type="uint32"/>
+</struct>
+
+<enum id="mcache_ctl_dc_warnd" size="4">
+<evalue name="Disable write-around HW mechanism. All cacheable write misses allocate a cache line according to PMA settings." value="0"/>
+<evalue name="Override PMA setting and do not allocate a line after consecutive store to 4 cache lines." value="1"/>
+<evalue name="Override PMA setting and do not allocate a line after consecutive store to 64 cache lines." value="2"/>
+<evalue name="Override PMA setting and do not allocate a line after consecutive store to 128 cache lines." value="3"/>
+</enum>
+<enum id="mcache_ctl_l2c_warnd" size="4">
+<evalue name="Disable write-around HW mechanism. All cacheable write misses allocate a cache line according to PMA settings." value="0"/>
+<evalue name="Override PMA setting and do not allocate a line after consecutive store to 16 cache lines." value="1"/>
+<evalue name="Override PMA setting and do not allocate a line after consecutive store to 128 cache lines." value="2"/>
+<evalue name="Override PMA setting and do not allocate a line after consecutive store to 512 cache lines." value="3"/>
+</enum>
+<flags id="mcache_ctl_flags" size="4">
+<field name="ic_en" start="0" end="0"/>
+<field name="dc_en" start="1" end="1"/>
+<field name="ic_rwecc" start="6" end="6"/>
+<field name="dc_rwecc" start="7" end="7"/>
+<field name="cctl_suen" start="8" end="8"/>
+<field name="ipref_en" start="9" end="9"/>
+<field name="dpref_en" start="10" end="10"/>
+<field name="ic_1st_wd" start="11" end="11"/>
+<field name="dc_1st_wd" start="12" end="12"/>
+</flags>
+<struct id="reg_mcache_ctl" size="4">
+<field name="" start="0" end="31" type="mcache_ctl_flags"/>
+<field name="ic_eccen" start="2" end="3" type="milmb_eccen"/>
+<field name="dc_eccen" start="4" end="5" type="milmb_eccen"/>
+<field name="dc_warnd" start="13" end="14" type="mcache_ctl_dc_warnd"/>
+<field name="l2c_warnd" start="15" end="16" type="mcache_ctl_l2c_warnd"/>
+<field name="tlb_eccen" start="17" end="18" type="milmb_eccen"/>
+</struct>
+
+<flags id="mmisc_ctl_flags" size="4">
+<field name="ace" start="0" end="0"/>
+<field name="vec_plic" start="1" end="1"/>
+<field name="rvcompm" start="2" end="2"/>
+<field name="brpe" start="3" end="3"/>
+<field name="una" start="6" end="6"/>
+<field name="nbld_en" start="8" end="8"/>
+<field name="newnmi" start="9" end="9"/>
+<field name="vcgl1_en" start="10" end="10"/>
+<field name="vcgl2_en" start="11" end="11"/>
+<field name="vcgl3_en" start="12" end="12"/>
+</flags>
+<struct id="reg_mmisc_ctl" size="4">
+<field name="" start="0" end="31" type="mmisc_ctl_flags"/>
+<field name="aces" start="4" end="5" type="mstatus_FS"/>
+</struct>
+
+<enum id="mxstatus_typ" size="4">
+<evalue name="Background process" value="0"/>
+<evalue name="Interrupt" value="1"/>
+<evalue name="Exception" value="2"/>
+<evalue name="NMI" value="3"/>
+</enum>
+<flags id="mxstatus_flags" size="4">
+<field name="pft_en" start="0" end="0"/>
+<field name="ppft_en" start="1" end="1"/>
+<field name="dme" start="4" end="4"/>
+<field name="pdme" start="5" end="5"/>
+</flags>
+<struct id="reg_mxstatus" size="4">
+<field name="" start="0" end="31" type="mxstatus_flags"/>
+<field name="typ" start="6" end="7" type="mxstatus_typ"/>
+<field name="ptyp" start="8" end="9" type="mxstatus_typ"/>
+</struct>
+
+<enum id="mdcause_pm" size="4">
+<evalue name="The privilege mode is User mode" value="0"/>
+<evalue name="The privilege mode is Supervisor mode" value="1"/>
+<evalue name="The privilege mode is Machine mode" value="3"/>
+</enum>
+<struct id="reg_mdcause" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="mdcause" start="0" end="4" type="uint32"/>
+<field name="pm" start="5" end="6" type="mdcause_pm"/>
+</struct>
+
+<flags id="mslideleg_flags" size="4">
+<field name="imecci" start="16" end="16"/>
+<field name="bwei" start="17" end="17"/>
+<field name="pmovi" start="18" end="18"/>
+</flags>
+<struct id="reg_mslideleg" size="4">
+<field name="" start="0" end="31" type="mslideleg_flags"/>
+</struct>
+
+<flags id="mhsp_ctl_flags" size="4">
+<field name="ovf_en" start="0" end="0"/>
+<field name="udf_en" start="1" end="1"/>
+<field name="schm" start="2" end="2"/>
+<field name="u" start="3" end="3"/>
+<field name="s" start="4" end="4"/>
+<field name="m" start="5" end="5"/>
+</flags>
+<struct id="reg_mhsp_ctl" size="4">
+<field name="" start="0" end="31" type="mhsp_ctl_flags"/>
+</struct>
+
+<flags id="dexc2dbg_flags" size="4">
+<field name="IAM" start="0" end="0"/>
+<field name="IAF" start="1" end="1"/>
+<field name="II" start="2" end="2"/>
+<field name="NMI" start="3" end="3"/>
+<field name="LAM" start="4" end="4"/>
+<field name="LAF" start="5" end="5"/>
+<field name="SAM" start="6" end="6"/>
+<field name="SAF" start="7" end="7"/>
+<field name="UEC" start="8" end="8"/>
+<field name="SEC" start="9" end="9"/>
+<field name="HEC" start="10" end="10"/>
+<field name="MEC" start="11" end="11"/>
+<field name="HSP" start="12" end="12"/>
+<field name="ACE" start="13" end="13"/>
+<field name="SLPECC" start="14" end="14"/>
+<field name="BWE" start="15" end="15"/>
+<field name="IPF" start="16" end="16"/>
+<field name="LPF" start="17" end="17"/>
+<field name="SPF" start="18" end="18"/>
+<field name="PMOV" start="19" end="19"/>
+</flags>
+<struct id="reg_dexc2dbg" size="4">
+<field name="" start="0" end="31" type="dexc2dbg_flags"/>
+</struct>
+
+<enum id="ddcause_subtype" size="4">
+<evalue name="Illegal instruction" value="0"/>
+<evalue name="Privileged instruction" value="1"/>
+<evalue name="Non-existent CSR" value="2"/>
+<evalue name="Read-only CSR update" value="3"/>
+<evalue name="Privileged CSR access" value="4"/>
+</enum>
+<enum id="ddcause_maintype" size="4">
+<evalue name="Software Breakpoint" value="0"/>
+<evalue name="Instruction Access Misaligned" value="1"/>
+<evalue name="Instruction Access Fault" value="2"/>
+<evalue name="Illegal Instruction" value="3"/>
+<evalue name="Non-Maskable Interrupt" value="4"/>
+<evalue name="Load Access Misaligned" value="5"/>
+<evalue name="Load Access Fault" value="6"/>
+<evalue name="Store Access Misaligned" value="7"/>
+<evalue name="Store Access Fault" value="8"/>
+<evalue name="U-mode Environment Call" value="9"/>
+<evalue name="S-mode Environment Call" value="10"/>
+<evalue name="Instruction page fault" value="11"/>
+<evalue name="M-mode Environment Call" value="12"/>
+<evalue name="Load page fault" value="13"/>
+<evalue name="Store/AMO page fault" value="15"/>
+<evalue name="Imprecise ECC error" value="16"/>
+<evalue name="Bus write transaction error" value="17"/>
+<evalue name="Performance Counter overflow" value="18"/>
+<evalue name="Stack overflow exception" value="32"/>
+<evalue name="Stack underflow exception" value="33"/>
+<evalue name="ACE disabled exception" value="34"/>
+<evalue name="ACE exception: concatenating" value="40"/>
+<evalue name="ACE exception: concatenating" value="41"/>
+<evalue name="ACE exception: concatenating" value="42"/>
+<evalue name="ACE exception: concatenating" value="43"/>
+<evalue name="ACE exception: concatenating" value="44"/>
+<evalue name="ACE exception: concatenating" value="45"/>
+<evalue name="ACE exception: concatenating" value="46"/>
+<evalue name="ACE exception: concatenating" value="47"/>
+</enum>
+<struct id="reg_ddcause" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="maintype" start="0" end="7" type="ddcause_maintype"/>
+<field name="subtype" start="8" end="15" type="ddcause_subtype"/>
+</struct>
+
+<struct id="reg_sstatus" size="4">
+<field name="" start="0" end="31" type="mstatus_flags"/>
+<field name="FS" start="13" end="14" type="mstatus_FS"/>
+<field name="XS" start="15" end="16" type="mstatus_FS"/>
+<field name="VS" start="23" end="24" type="mstatus_FS"/>
+</struct>
+
+<struct id="reg_sie" size="4">
+<field name="" start="0" end="31" type="mie_flags"/>
+</struct>
+
+<struct id="reg_sip" size="4">
+<field name="" start="0" end="31" type="mip_flags"/>
+</struct>
+
+<struct id="reg_stvec" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="base" start="2" end="31" type="uint32"/>
+</struct>
+
+<struct id="reg_scause" size="4">
+<field name="" start="0" end="31" type="mcause_flags"/>
+<field name="exceptioncode" start="0" end="30" type="mcause_exceptioncode"/>
+</struct>
+
+<enum id="satp_mode" size="4">
+<evalue name="Bare" value="0"/>
+<evalue name="Sv32" value="1"/>
+</enum>
+<struct id="reg_satp" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="ppn" start="0" end="21" type="uint32"/>
+<field name="asid" start="22" end="30" type="uint32"/>
+<field name="mode" start="31" end="31" type="satp_mode"/>
+</struct>
+
+<struct id="reg_slie" size="4">
+<field name="" start="0" end="31" type="mslideleg_flags"/>
+</struct>
+
+<struct id="reg_slip" size="4">
+<field name="" start="0" end="31" type="mslideleg_flags"/>
+</struct>
+
+<enum id="sdcause_pm" size="4">
+<evalue name="The privilege mode is User mode" value="0"/>
+<evalue name="The privilege mode is Supervisor mode" value="1"/>
+</enum>
+<struct id="reg_sdcause" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="sdcause" start="0" end="4" type="uint32"/>
+<field name="pm" start="5" end="6" type="sdcause_pm"/>
+</struct>
+
+<struct id="reg_smisc_ctl" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="aces" start="4" end="5" type="mstatus_FS"/>
+</struct>
+
+<flags id="uitb_flags" size="4">
+<field name="hw" start="0" end="0"/>
+</flags>
+<struct id="reg_uitb" size="4">
+<field name="" start="0" end="31" type="uitb_flags"/>
+<field name="addr" start="2" end="31" type="uint32"/>
+</struct>
+
+<struct id="reg_mvendorid" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="offset" start="0" end="6" type="uint32"/>
+<field name="bank" start="7" end="31" type="uint32"/>
+</struct>
+
+<enum id="pmp0cfg_a" size="1">
+<evalue name="OFF" value="0"/>
+<evalue name="TOR" value="1"/>
+<evalue name="NA4" value="2"/>
+<evalue name="NAPOT" value="3"/>
+</enum>
+<flags id="pmp0cfg_flags" size="1">
+<field name="r" start="0" end="0"/>
+<field name="w" start="1" end="1"/>
+<field name="x" start="2" end="2"/>
+<field name="l" start="7" end="7"/>
+</flags>
+<struct id="pmp0cfg_S" size="1">
+<field name="" start="0" end="7" type="pmp0cfg_flags"/>
+<field name="a" start="3" end="4" type="pmp0cfg_a"/>
+</struct>
+<struct id="reg_pmpcfg0" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="pmp0cfg" start="0" end="7" type="pmp0cfg_S"/>
+<field name="pmp1cfg" start="8" end="15" type="pmp0cfg_S"/>
+<field name="pmp2cfg" start="16" end="23" type="pmp0cfg_S"/>
+<field name="pmp3cfg" start="24" end="31" type="pmp0cfg_S"/>
+</struct>
+
+<struct id="reg_pmpcfg1" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="pmp4cfg" start="0" end="7" type="pmp0cfg_S"/>
+<field name="pmp5cfg" start="8" end="15" type="pmp0cfg_S"/>
+<field name="pmp6cfg" start="16" end="23" type="pmp0cfg_S"/>
+<field name="pmp7cfg" start="24" end="31" type="pmp0cfg_S"/>
+</struct>
+
+<struct id="reg_pmpcfg2" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="pmp8cfg" start="0" end="7" type="pmp0cfg_S"/>
+<field name="pmp9cfg" start="8" end="15" type="pmp0cfg_S"/>
+<field name="pmp10cfg" start="16" end="23" type="pmp0cfg_S"/>
+<field name="pmp11cfg" start="24" end="31" type="pmp0cfg_S"/>
+</struct>
+
+<struct id="reg_pmpcfg3" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="pmp12cfg" start="0" end="7" type="pmp0cfg_S"/>
+<field name="pmp13cfg" start="8" end="15" type="pmp0cfg_S"/>
+<field name="pmp14cfg" start="16" end="23" type="pmp0cfg_S"/>
+<field name="pmp15cfg" start="24" end="31" type="pmp0cfg_S"/>
+</struct>
+
+<flags id="mcounteren_flags" size="4">
+<field name="cy" start="0" end="0"/>
+<field name="tm" start="1" end="1"/>
+<field name="ir" start="2" end="2"/>
+<field name="hpm3" start="3" end="3"/>
+<field name="hpm4" start="4" end="4"/>
+<field name="hpm5" start="5" end="5"/>
+<field name="hpm6" start="6" end="6"/>
+<field name="hpm7" start="7" end="7"/>
+<field name="hpm8" start="8" end="8"/>
+<field name="hpm9" start="9" end="9"/>
+<field name="hpm10" start="10" end="10"/>
+<field name="hpm11" start="11" end="11"/>
+<field name="hpm12" start="12" end="12"/>
+<field name="hpm13" start="13" end="13"/>
+<field name="hpm14" start="14" end="14"/>
+<field name="hpm15" start="15" end="15"/>
+<field name="hpm16" start="16" end="16"/>
+<field name="hpm17" start="17" end="17"/>
+<field name="hpm18" start="18" end="18"/>
+<field name="hpm19" start="19" end="19"/>
+<field name="hpm20" start="20" end="20"/>
+<field name="hpm21" start="21" end="21"/>
+<field name="hpm22" start="22" end="22"/>
+<field name="hpm23" start="23" end="23"/>
+<field name="hpm24" start="24" end="24"/>
+<field name="hpm25" start="25" end="25"/>
+<field name="hpm26" start="26" end="26"/>
+<field name="hpm27" start="27" end="27"/>
+<field name="hpm28" start="28" end="28"/>
+<field name="hpm29" start="29" end="29"/>
+<field name="hpm30" start="30" end="30"/>
+<field name="hpm31" start="31" end="31"/>
+</flags>
+<struct id="reg_mcounteren" size="4">
+<field name="" start="0" end="31" type="mcounteren_flags"/>
+</struct>
+
+<struct id="reg_mnvec" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="nmi base address" start="2" end="31" type="uint32"/>
+</struct>
+
+<flags id="mcounterwen_flags" size="4">
+<field name="cy" start="0" end="0"/>
+<field name="ir" start="2" end="2"/>
+<field name="hpm3" start="3" end="3"/>
+<field name="hpm4" start="4" end="4"/>
+<field name="hpm5" start="5" end="5"/>
+<field name="hpm6" start="6" end="6"/>
+<field name="hpm7" start="7" end="7"/>
+<field name="hpm8" start="8" end="8"/>
+<field name="hpm9" start="9" end="9"/>
+<field name="hpm10" start="10" end="10"/>
+<field name="hpm11" start="11" end="11"/>
+<field name="hpm12" start="12" end="12"/>
+<field name="hpm13" start="13" end="13"/>
+<field name="hpm14" start="14" end="14"/>
+<field name="hpm15" start="15" end="15"/>
+<field name="hpm16" start="16" end="16"/>
+<field name="hpm17" start="17" end="17"/>
+<field name="hpm18" start="18" end="18"/>
+<field name="hpm19" start="19" end="19"/>
+<field name="hpm20" start="20" end="20"/>
+<field name="hpm21" start="21" end="21"/>
+<field name="hpm22" start="22" end="22"/>
+<field name="hpm23" start="23" end="23"/>
+<field name="hpm24" start="24" end="24"/>
+<field name="hpm25" start="25" end="25"/>
+<field name="hpm26" start="26" end="26"/>
+<field name="hpm27" start="27" end="27"/>
+<field name="hpm28" start="28" end="28"/>
+<field name="hpm29" start="29" end="29"/>
+<field name="hpm30" start="30" end="30"/>
+<field name="hpm31" start="31" end="31"/>
+</flags>
+<struct id="reg_mcounterwen" size="4">
+<field name="" start="0" end="31" type="mcounterwen_flags"/>
+</struct>
+
+<enum id="pma0cfg_etyp" size="1">
+<evalue name="OFF" value="0"/>
+<evalue name="TOR" value="1"/>
+<evalue name="NA4" value="2"/>
+<evalue name="NAPOT" value="3"/>
+</enum>
+<enum id="pma0cfg_mtyp" size="2">
+<evalue name="device, non-bufferable" value="0"/>
+<evalue name="device, bufferable" value="1"/>
+<evalue name="memory, non-cacheable, non-bufferable" value="2"/>
+<evalue name="memory, non-cacheable, bufferable" value="3"/>
+<evalue name="memory, write-through, no-allocate" value="4"/>
+<evalue name="memory, write-through, read-allocate" value="5"/>
+<evalue name="memory, write-through, write-allocate" value="6"/>
+<evalue name="memory, write-through, read and write-allocate" value="7"/>
+<evalue name="memory, write-back, no-allocate" value="8"/>
+<evalue name="memory, write-back, read-allocate" value="9"/>
+<evalue name="memory, write-back, write-allocate" value="10"/>
+<evalue name="memory, write-back, read and write-allocate" value="11"/>
+<evalue name="empty hole, nothing exists" value="15"/>
+</enum>
+<flags id="pma0cfg_flags" size="1">
+<field name="namo" start="6" end="6"/>
+</flags>
+<struct id="pma0cfg_S" size="1">
+<field name="" start="0" end="7" type="pma0cfg_flags"/>
+<field name="etyp" start="0" end="1" type="pma0cfg_etyp"/>
+<field name="mtyp" start="2" end="5" type="pma0cfg_mtyp"/>
+</struct>
+<struct id="reg_pmacfg0" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="pma0cfg" start="0" end="7" type="pma0cfg_S"/>
+<field name="pma1cfg" start="8" end="15" type="pma0cfg_S"/>
+<field name="pma2cfg" start="16" end="23" type="pma0cfg_S"/>
+<field name="pma3cfg" start="24" end="31" type="pma0cfg_S"/>
+</struct>
+
+<struct id="reg_pmacfg1" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="pma4cfg" start="0" end="7" type="pma0cfg_S"/>
+<field name="pma5cfg" start="8" end="15" type="pma0cfg_S"/>
+<field name="pma6cfg" start="16" end="23" type="pma0cfg_S"/>
+<field name="pma7cfg" start="24" end="31" type="pma0cfg_S"/>
+</struct>
+
+<struct id="reg_pmacfg2" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="pma8cfg" start="0" end="7" type="pma0cfg_S"/>
+<field name="pma9cfg" start="8" end="15" type="pma0cfg_S"/>
+<field name="pma10cfg" start="16" end="23" type="pma0cfg_S"/>
+<field name="pma11cfg" start="24" end="31" type="pma0cfg_S"/>
+</struct>
+
+<struct id="reg_pmacfg3" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="pma12cfg" start="0" end="7" type="pma0cfg_S"/>
+<field name="pma13cfg" start="8" end="15" type="pma0cfg_S"/>
+<field name="pma14cfg" start="16" end="23" type="pma0cfg_S"/>
+<field name="pma15cfg" start="24" end="31" type="pma0cfg_S"/>
+</struct>
+
+<flags id="msavestatus_flags" size="4">
+<field name="mpie1" start="0" end="0"/>
+<field name="ppft_en1" start="3" end="3"/>
+<field name="pdme1" start="5" end="5"/>
+<field name="mpie2" start="8" end="8"/>
+<field name="ppft_en2" start="11" end="11"/>
+<field name="pdme2" start="13" end="13"/>
+</flags>
+<struct id="reg_msavestatus" size="4">
+<field name="" start="0" end="31" type="msavestatus_flags"/>
+<field name="mpp1" start="1" end="2" type="uint32"/>
+<field name="ptyp1" start="6" end="7" type="uint32"/>
+<field name="mpp2" start="9" end="10" type="uint32"/>
+<field name="ptyp2" start="14" end="15" type="uint32"/>
+</struct>
+
+<flags id="wfe_flags" size="4">
+<field name="wfe" start="0" end="0"/>
+</flags>
+<struct id="reg_wfe" size="4">
+<field name="" start="0" end="31" type="wfe_flags"/>
+</struct>
+
+<flags id="sleepvalue_flags" size="4">
+<field name="sv" start="0" end="0"/>
+</flags>
+<struct id="reg_sleepvalue" size="4">
+<field name="" start="0" end="31" type="sleepvalue_flags"/>
+</struct>
+
+<flags id="txevt_flags" size="4">
+<field name="evt0" start="0" end="0"/>
+</flags>
+<struct id="reg_txevt" size="4">
+<field name="" start="0" end="31" type="txevt_flags"/>
+</struct>
+
+<enum id="mppib_size" size="4">
+<evalue name="1 KiB" value="1"/>
+<evalue name="2 KiB" value="2"/>
+<evalue name="4 KiB" value="3"/>
+<evalue name="8 KiB" value="4"/>
+<evalue name="16 KiB" value="5"/>
+<evalue name="32 KiB" value="6"/>
+<evalue name="64 KiB" value="7"/>
+<evalue name="128 KiB" value="8"/>
+<evalue name="256 KiB" value="9"/>
+<evalue name="512 KiB" value="10"/>
+<evalue name="1 MiB" value="11"/>
+<evalue name="2 MiB" value="12"/>
+<evalue name="4 MiB" value="13"/>
+<evalue name="8 MiB" value="14"/>
+<evalue name="16 MiB" value="15"/>
+<evalue name="32 MiB" value="16"/>
+<evalue name="64 MiB" value="17"/>
+<evalue name="128 MiB" value="18"/>
+<evalue name="256 MiB" value="19"/>
+<evalue name="512 MiB" value="20"/>
+<evalue name="1 GiB" value="21"/>
+<evalue name="2 GiB" value="22"/>
+</enum>
+<flags id="mppib_flags" size="4">
+<field name="en" start="0" end="0"/>
+</flags>
+<struct id="reg_mppib" size="4">
+<field name="" start="0" end="31" type="mppib_flags"/>
+<field name="size" start="1" end="5" type="mppib_size"/>
+<field name="BPA" start="10" end="31" type="uint32"/>
+</struct>
+
+<flags id="ustatus_flags" size="4">
+<field name="uie" start="0" end="0"/>
+<field name="upie" start="4" end="4"/>
+</flags>
+<struct id="reg_ustatus" size="4">
+<field name="" start="0" end="31" type="ustatus_flags"/>
+</struct>
+
+<flags id="uie_flags" size="4">
+<field name="usie" start="0" end="0"/>
+<field name="utie" start="4" end="4"/>
+<field name="ueip" start="8" end="8"/>
+</flags>
+<struct id="reg_uie" size="4">
+<field name="" start="0" end="31" type="uie_flags"/>
+</struct>
+
+<flags id="uip_flags" size="4">
+<field name="usip" start="0" end="0"/>
+<field name="utip" start="4" end="4"/>
+<field name="ueip" start="8" end="8"/>
+</flags>
+<struct id="reg_uip" size="4">
+<field name="" start="0" end="31" type="uip_flags"/>
+</struct>
+
+<struct id="reg_utvec" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="base" start="2" end="31" type="uint32"/>
+</struct>
+
+<enum id="ucause_exceptioncode" size="4">
+<evalue name="Instruction address misaligned / User software interrupt" value="0"/>
+<evalue name="Instruction access fault" value="1"/>
+<evalue name="Illegal instruction" value="2"/>
+<evalue name="Breakpoint" value="3"/>
+<evalue name="Load address misaligned / User timer interrupt" value="4"/>
+<evalue name="Load access fault" value="5"/>
+<evalue name="Store/AMO address misaligned" value="6"/>
+<evalue name="Store/AMO access fault / Machine timer interrupt" value="7"/>
+<evalue name="Environment call from U-mode / User external interrupt" value="8"/>
+<evalue name="Environment call from S-mode" value="9"/>
+<evalue name="Environment call from M-mode" value="11"/>
+<evalue name="Instruction page fault" value="12"/>
+<evalue name="Load page fault" value="13"/>
+<evalue name="Store/AMO page fault" value="15"/>
+<evalue name="Slave port ECC error interrupt" value="16"/>
+<evalue name="Bus read/write transaction error interrupt" value="17"/>
+<evalue name="Performance monitor overflow interrupt" value="18"/>
+<evalue name="Stack overflow exception" value="32"/>
+<evalue name="Stack underflow exception" value="33"/>
+<evalue name="Andes Custom Extension exception." value="40"/>
+<evalue name="Andes Custom Extension exception." value="41"/>
+<evalue name="Andes Custom Extension exception." value="42"/>
+<evalue name="Andes Custom Extension exception." value="43"/>
+<evalue name="Andes Custom Extension exception." value="44"/>
+<evalue name="Andes Custom Extension exception." value="45"/>
+<evalue name="Andes Custom Extension exception." value="46"/>
+<evalue name="Andes Custom Extension exception." value="47"/>
+</enum>
+<struct id="reg_ucause" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="exception code" start="0" end="30" type="ucause_exceptioncode"/>
+<field name="interrupt" start="31" end="31" type="uint32"/>
+</struct>
+
+<struct id="reg_mtvt" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="base address" start="6" end="31" type="uint32"/>
+</struct>
+
+<struct id="reg_mintstatus" size="4">
+<field name="" start="0" end="31" type="uint32"/>
+<field name="uil" start="0" end="7" type="uint32"/>
+<field name="sil" start="8" end="15" type="uint32"/>
+<field name="mil" start="24" end="31" type="uint32"/>
+</struct>
+
+<flags id="ucode_flags" size="4">
+<field name="ov" start="0" end="0"/>
+</flags>
+<struct id="reg_ucode" size="4">
+<field name="" start="0" end="31" type="ucode_flags"/>
+</struct>
+
+<flags id="mirq_entry_flags" size="4">
+<field name="en" start="0" end="0"/>
+</flags>
+<struct id="reg_mirq_entry" size="4">
+<field name="" start="0" end="31" type="mirq_entry_flags"/>
+<field name="icea" start="1" end="31" type="uint32"/>
+</struct>
+
+<reg name="csr768" bitsize="32" type="reg_mstatus"/>
+<reg name="mstatus" bitsize="32" type="reg_mstatus"/>
+<reg name="csr772" bitsize="32" type="reg_mie"/>
+<reg name="mie" bitsize="32" type="reg_mie"/>
+<reg name="csr836" bitsize="32" type="reg_mip"/>
+<reg name="mip" bitsize="32" type="reg_mip"/>
+<reg name="csr771" bitsize="32" type="reg_mideleg"/>
+<reg name="mideleg" bitsize="32" type="reg_mideleg"/>
+<reg name="csr770" bitsize="32" type="reg_medeleg"/>
+<reg name="medeleg" bitsize="32" type="reg_medeleg"/>
+<reg name="csr773" bitsize="32" type="reg_mtvec"/>
+<reg name="mtvec" bitsize="32" type="reg_mtvec"/>
+<reg name="csr834" bitsize="32" type="reg_mcause"/>
+<reg name="mcause" bitsize="32" type="reg_mcause"/>
+<reg name="csr769" bitsize="32" type="reg_misa"/>
+<reg name="misa" bitsize="32" type="reg_misa"/>
+<reg name="csr3858" bitsize="32" type="reg_marchid"/>
+<reg name="marchid" bitsize="32" type="reg_marchid"/>
+<reg name="csr3859" bitsize="32" type="reg_mimpid"/>
+<reg name="mimpid" bitsize="32" type="reg_mimpid"/>
+<reg name="csr1953" bitsize="32" type="reg_tdata1"/>
+<reg name="tdata1" bitsize="32" type="reg_tdata1"/>
+<reg name="csr1956" bitsize="32" type="reg_tinfo"/>
+<reg name="tinfo" bitsize="32" type="reg_tinfo"/>
+<reg name="csr1968" bitsize="32" type="reg_dcsr"/>
+<reg name="dcsr" bitsize="32" type="reg_dcsr"/>
+<reg name="csr1" bitsize="32" type="reg_fflags"/>
+<reg name="fflags" bitsize="32" type="reg_fflags"/>
+<reg name="csr2" bitsize="32" type="reg_frm"/>
+<reg name="frm" bitsize="32" type="reg_frm"/>
+<reg name="csr3" bitsize="32" type="reg_fcsr"/>
+<reg name="fcsr" bitsize="32" type="reg_fcsr"/>
+<reg name="csr4032" bitsize="32" type="reg_micm_cfg"/>
+<reg name="micm_cfg" bitsize="32" type="reg_micm_cfg"/>
+<reg name="csr4033" bitsize="32" type="reg_mdcm_cfg"/>
+<reg name="mdcm_cfg" bitsize="32" type="reg_mdcm_cfg"/>
+<reg name="csr4034" bitsize="32" type="reg_mmsc_cfg"/>
+<reg name="mmsc_cfg" bitsize="32" type="reg_mmsc_cfg"/>
+<reg name="csr4035" bitsize="32" type="reg_mmsc_cfg2"/>
+<reg name="mmsc_cfg2" bitsize="32" type="reg_mmsc_cfg2"/>
+<reg name="csr4039" bitsize="32" type="reg_mvec_cfg"/>
+<reg name="mvec_cfg" bitsize="32" type="reg_mvec_cfg"/>
+<reg name="csr4040" bitsize="32" type="reg_mcrash_statesave"/>
+<reg name="mcrash_statesave" bitsize="32" type="reg_mcrash_statesave"/>
+<reg name="csr4041" bitsize="32" type="reg_mstatus"/>
+<reg name="mstatus_crashsave" bitsize="32" type="reg_mstatus"/>
+<reg name="csr1984" bitsize="32" type="reg_milmb"/>
+<reg name="milmb" bitsize="32" type="reg_milmb"/>
+<reg name="csr1985" bitsize="32" type="reg_mdlmb"/>
+<reg name="mdlmb" bitsize="32" type="reg_mdlmb"/>
+<reg name="csr1986" bitsize="32" type="reg_mecc_code"/>
+<reg name="mecc_code" bitsize="32" type="reg_mecc_code"/>
+<reg name="csr1989" bitsize="32" type="reg_mpft_ctl"/>
+<reg name="mpft_ctl" bitsize="32" type="reg_mpft_ctl"/>
+<reg name="csr1994" bitsize="32" type="reg_mcache_ctl"/>
+<reg name="mcache_ctl" bitsize="32" type="reg_mcache_ctl"/>
+<reg name="csr2000" bitsize="32" type="reg_mmisc_ctl"/>
+<reg name="mmisc_ctl" bitsize="32" type="reg_mmisc_ctl"/>
+<reg name="csr1988" bitsize="32" type="reg_mxstatus"/>
+<reg name="mxstatus" bitsize="32" type="reg_mxstatus"/>
+<reg name="csr2005" bitsize="32" type="reg_mslideleg"/>
+<reg name="mslideleg" bitsize="32" type="reg_mslideleg"/>
+<reg name="csr1990" bitsize="32" type="reg_mhsp_ctl"/>
+<reg name="mhsp_ctl" bitsize="32" type="reg_mhsp_ctl"/>
+<reg name="csr2016" bitsize="32" type="reg_dexc2dbg"/>
+<reg name="dexc2dbg" bitsize="32" type="reg_dexc2dbg"/>
+<reg name="csr2017" bitsize="32" type="reg_ddcause"/>
+<reg name="ddcause" bitsize="32" type="reg_ddcause"/>
+<reg name="csr256" bitsize="32" type="reg_sstatus"/>
+<reg name="sstatus" bitsize="32" type="reg_sstatus"/>
+<reg name="csr260" bitsize="32" type="reg_sie"/>
+<reg name="sie" bitsize="32" type="reg_sie"/>
+<reg name="csr324" bitsize="32" type="reg_sip"/>
+<reg name="sip" bitsize="32" type="reg_sip"/>
+<reg name="csr261" bitsize="32" type="reg_stvec"/>
+<reg name="stvec" bitsize="32" type="reg_stvec"/>
+<reg name="csr322" bitsize="32" type="reg_scause"/>
+<reg name="scause" bitsize="32" type="reg_scause"/>
+<reg name="csr384" bitsize="32" type="reg_satp"/>
+<reg name="satp" bitsize="32" type="reg_satp"/>
+<reg name="csr2500" bitsize="32" type="reg_slie"/>
+<reg name="slie" bitsize="32" type="reg_slie"/>
+<reg name="csr2501" bitsize="32" type="reg_slip"/>
+<reg name="slip" bitsize="32" type="reg_slip"/>
+<reg name="csr2505" bitsize="32" type="reg_sdcause"/>
+<reg name="sdcause" bitsize="32" type="reg_sdcause"/>
+<reg name="csr2512" bitsize="32" type="reg_smisc_ctl"/>
+<reg name="smisc_ctl" bitsize="32" type="reg_smisc_ctl"/>
+<reg name="csr2048" bitsize="32" type="reg_uitb"/>
+<reg name="uitb" bitsize="32" type="reg_uitb"/>
+<reg name="csr3857" bitsize="32" type="reg_mvendorid"/>
+<reg name="mvendorid" bitsize="32" type="reg_mvendorid"/>
+<reg name="csr928" bitsize="32" type="reg_pmpcfg0"/>
+<reg name="pmpcfg0" bitsize="32" type="reg_pmpcfg0"/>
+<reg name="csr929" bitsize="32" type="reg_pmpcfg1"/>
+<reg name="pmpcfg1" bitsize="32" type="reg_pmpcfg1"/>
+<reg name="csr930" bitsize="32" type="reg_pmpcfg2"/>
+<reg name="pmpcfg2" bitsize="32" type="reg_pmpcfg2"/>
+<reg name="csr931" bitsize="32" type="reg_pmpcfg3"/>
+<reg name="pmpcfg3" bitsize="32" type="reg_pmpcfg3"/>
+<reg name="csr774" bitsize="32" type="reg_mcounteren"/>
+<reg name="mcounteren" bitsize="32" type="reg_mcounteren"/>
+<reg name="csr1987" bitsize="32" type="reg_mnvec"/>
+<reg name="mnvec" bitsize="32" type="reg_mnvec"/>
+<reg name="csr1993" bitsize="32" type="reg_mdcause"/>
+<reg name="mdcause" bitsize="32" type="reg_mdcause"/>
+<reg name="csr1998" bitsize="32" type="reg_mcounterwen"/>
+<reg name="mcounterwen" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr1999" bitsize="32" type="reg_mcounterwen"/>
+<reg name="mcounterinten" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2001" bitsize="32" type="reg_mcounterwen"/>
+<reg name="mcountermask_m" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2002" bitsize="32" type="reg_mcounterwen"/>
+<reg name="mcountermask_s" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2003" bitsize="32" type="reg_mcounterwen"/>
+<reg name="mcountermask_u" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2004" bitsize="32" type="reg_mcounterwen"/>
+<reg name="mcounterovf" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr262" bitsize="32" type="reg_mcounterwen"/>
+<reg name="scounteren" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2511" bitsize="32" type="reg_mcounterwen"/>
+<reg name="scounterinten" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2514" bitsize="32" type="reg_mcounterwen"/>
+<reg name="scountermask_s" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2515" bitsize="32" type="reg_mcounterwen"/>
+<reg name="scountermask_u" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2516" bitsize="32" type="reg_mcounterwen"/>
+<reg name="scounterovf" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2006" bitsize="32" type="reg_msavestatus"/>
+<reg name="msavestatus" bitsize="32" type="reg_msavestatus"/>
+<reg name="csr2513" bitsize="32" type="reg_mcounterwen"/>
+<reg name="scountermask_m" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr800" bitsize="32" type="reg_mcounterwen"/>
+<reg name="mcountinhibit" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2528" bitsize="32" type="reg_mcounterwen"/>
+<reg name="scountinhibit" bitsize="32" type="reg_mcounterwen"/>
+<reg name="csr2064" bitsize="32" type="reg_wfe"/>
+<reg name="wfe" bitsize="32" type="reg_wfe"/>
+<reg name="csr2065" bitsize="32" type="reg_sleepvalue"/>
+<reg name="sleepvalue" bitsize="32" type="reg_sleepvalue"/>
+<reg name="csr2066" bitsize="32" type="reg_txevt"/>
+<reg name="txevt" bitsize="32" type="reg_txevt"/>
+<reg name="csr2032" bitsize="32" type="reg_mppib"/>
+<reg name="mppib" bitsize="32" type="reg_mppib"/>
+<reg name="csr2033" bitsize="32" type="reg_mppib"/>
+<reg name="mfiob" bitsize="32" type="reg_mppib"/>
+<reg name="csr0" bitsize="32" type="reg_ustatus"/>
+<reg name="ustatus" bitsize="32" type="reg_ustatus"/>
+<reg name="csr4" bitsize="32" type="reg_uie"/>
+<reg name="uie" bitsize="32" type="reg_uie"/>
+<reg name="csr68" bitsize="32" type="reg_uip"/>
+<reg name="uip" bitsize="32" type="reg_uip"/>
+<reg name="csr5" bitsize="32" type="reg_utvec"/>
+<reg name="utvec" bitsize="32" type="reg_utvec"/>
+<reg name="csr66" bitsize="32" type="reg_ucause"/>
+<reg name="ucause" bitsize="32" type="reg_ucause"/>
+<reg name="csr775" bitsize="32" type="reg_mtvt"/>
+<reg name="mtvt" bitsize="32" type="reg_mtvt"/>
+<reg name="csr838" bitsize="32" type="reg_mintstatus"/>
+<reg name="mintstatus" bitsize="32" type="reg_mintstatus"/>
+<reg name="csr2049" bitsize="32" type="reg_ucode"/>
+<reg name="ucode" bitsize="32" type="reg_ucode"/>
+<reg name="csr2044" bitsize="32" type="reg_mirq_entry"/>
+<reg name="mirq_entry" bitsize="32" type="reg_mirq_entry"/>
+<reg name="csr3008" bitsize="32" type="reg_pmacfg0"/>
+<reg name="pmacfg0" bitsize="32" type="reg_pmacfg0"/>
+<reg name="csr3009" bitsize="32" type="reg_pmacfg1"/>
+<reg name="pmacfg1" bitsize="32" type="reg_pmacfg1"/>
+<reg name="csr3010" bitsize="32" type="reg_pmacfg2"/>
+<reg name="pmacfg2" bitsize="32" type="reg_pmacfg2"/>
+<reg name="csr3011" bitsize="32" type="reg_pmacfg3"/>
+<reg name="pmacfg3" bitsize="32" type="reg_pmacfg3"/>
+</feature>
+
+<feature name="org.gnu.gdb.riscv.virtual">
+<struct id="reg_priv" size="1">
+<field name="" start="0" end="7" type="uint32"/>
+<field name="prv" start="0" end="1" type="dcsr_prv"/>
+</struct>
+
+<reg name="priv" bitsize="8" type="reg_priv"/>
+</feature>
+
+<feature name="org.gnu.gdb.riscv.vector">
+<vector id="v8bh" type="bfloat16" count="8"/>
+<vector id="v8h" type="ieee_half" count="8"/>
+<vector id="v4f" type="ieee_single" count="4"/>
+<vector id="v2d" type="ieee_double" count="2"/>
+<vector id="v16i8" type="int8" count="16"/>
+<vector id="v8i16" type="int16" count="8"/>
+<vector id="v4i32" type="int32" count="4"/>
+<vector id="v2i64" type="int64" count="2"/>
+<union id="vec128">
+<field name="bfloat16" type="v8bh"/>
+<field name="float16" type="v8h"/>
+<field name="float" type="v4f"/>
+<field name="double" type="v2d"/>
+<field name="int8" type="v16i8"/>
+<field name="int16" type="v8i16"/>
+<field name="int32" type="v4i32"/>
+<field name="int64" type="v2i64"/>
+</union>
+<vector id="v16bh" type="bfloat16" count="16"/>
+<vector id="v16h" type="ieee_half" count="16"/>
+<vector id="v8f" type="ieee_single" count="8"/>
+<vector id="v4d" type="ieee_double" count="4"/>
+<vector id="v32i8" type="int8" count="32"/>
+<vector id="v16i16" type="int16" count="16"/>
+<vector id="v8i32" type="int32" count="8"/>
+<vector id="v4i64" type="int64" count="4"/>
+<union id="vec256">
+<field name="bfloat16" type="v16bh"/>
+<field name="float16" type="v16h"/>
+<field name="float" type="v8f"/>
+<field name="double" type="v4d"/>
+<field name="int8" type="v32i8"/>
+<field name="int16" type="v16i16"/>
+<field name="int32" type="v8i32"/>
+<field name="int64" type="v4i64"/>
+</union>
+<vector id="v32bh" type="bfloat16" count="32"/>
+<vector id="v32h" type="ieee_half" count="32"/>
+<vector id="v16f" type="ieee_single" count="16"/>
+<vector id="v8d" type="ieee_double" count="8"/>
+<vector id="v64i8" type="int8" count="64"/>
+<vector id="v32i16" type="int16" count="32"/>
+<vector id="v16i32" type="int32" count="16"/>
+<vector id="v8i64" type="int64" count="8"/>
+<union id="vec512">
+<field name="bfloat16" type="v32bh"/>
+<field name="float16" type="v32h"/>
+<field name="float" type="v16f"/>
+<field name="double" type="v8d"/>
+<field name="int8" type="v64i8"/>
+<field name="int16" type="v32i16"/>
+<field name="int32" type="v16i32"/>
+<field name="int64" type="v8i64"/>
+</union>
+</feature>
+
+</target>
+

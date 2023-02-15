@@ -1,0 +1,33 @@
+#
+# Makefile for Burner
+#
+BUILD_ID = "`date +%Y%m%d%H`"
+
+# For Linux platform
+CC = gcc
+RM = rm -f
+AR = ar
+CFLAGS += -g3 -O0 -Wall -DBUILD_ID=$(BUILD_ID) -DCYG -DCONFIG_PARBURN=1
+LIBS = -lm -lrt #-L/usr/lib64
+
+CPPFLAGS = $(CFLAGS) 
+
+srcdir = $(shell pwd)
+
+OBJS =	$(srcdir)/util.o \
+	$(srcdir)/main.o \
+	$(srcdir)/platform-ag101p.o \
+	$(srcdir)/smcflash-IntelJ3.o \
+	$(srcdir)/smcflash-Micron.o
+
+all: PAR_burn
+
+PAR_burn: $(OBJS)
+	$(CC) -static -o $@ $(CPPFLAGS) $(OBJS) $(LIBS)
+
+clean:
+	rm -f PAR_burn *.o
+
+%.o:%.cpp
+	$(CC) $(CPPFLAGS) -c -o $@ $<
+

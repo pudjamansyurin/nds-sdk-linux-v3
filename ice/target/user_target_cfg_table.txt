@@ -1,0 +1,10 @@
+tap0_target_0     v3 1
+tap1_target_0     v5 1
+
+#tap1_target_0     v3_sdm 1
+#tap2_target_0     v5 2
+#tap2_target_1     v5 1
+#tap2_target_2     v5 1
+
+#tap0_irlen 4
+#tap0_expect_id 0x1000063D

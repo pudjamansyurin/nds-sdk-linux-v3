@@ -1,0 +1,32 @@
+#
+# Makefile for Burner
+#
+BUILD_ID = "`date +%Y%m%d%H`"
+
+# For Linux platform
+CC = gcc
+RM = rm -f
+AR = ar
+CFLAGS += -g0 -O2 -Wall -DSPI_BURN -DBUILD_ID=$(BUILD_ID) -DCYG
+LIBS = -lm -lrt #-L/usr/lib64
+
+CPPFLAGS = $(CFLAGS) 
+
+srcdir = $(shell pwd)
+
+OBJS =	$(srcdir)/util.o \
+	$(srcdir)/main.o \
+	$(srcdir)/platform.o \
+	$(srcdir)/spiflash-MXIC.o
+
+all: SPI_burn
+
+SPI_burn: $(OBJS)
+	$(CC) -static -o $@ $(CPPFLAGS) $(OBJS) $(LIBS)
+
+clean:
+	rm -f SPI_burn *.o
+
+%.o:%.cpp
+	$(CC) $(CPPFLAGS) -c -o $@ $<
+

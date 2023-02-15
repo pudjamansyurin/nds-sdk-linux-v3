@@ -1,0 +1,35 @@
+#
+# Makefile for Burner
+#
+BUILD_ID = "`date +%Y%m%d%H`"
+
+# For Windows platform with MinGW
+CC = i386-mingw32-gcc
+RM = rm -f
+AR = i386-mingw32-ar
+CFLAGS += -g0 -O2 -Wall -DBUILD_ID=$(BUILD_ID) -DCONFIG_PARBURN=1
+LIBS = -lws2_32 -lwsock32 -lm -lgdi32 -luser32 -lcfgmgr32 -lsetupapi -lcomctl32 
+
+
+CPPFLAGS = $(CFLAGS) 
+
+srcdir = $(shell pwd)
+
+OBJS =	$(srcdir)/util.o \
+	$(srcdir)/main.o \
+	$(srcdir)/platform-ag101p.o \
+	$(srcdir)/smcflash-IntelJ3.o \
+	$(srcdir)/smcflash-Micron.o
+
+
+all: PAR_burn.exe
+
+PAR_burn.exe: $(OBJS)
+	$(CC) -static -o $@ $(CPPFLAGS) $(OBJS) $(LIBS)
+
+clean:
+	rm -f PAR_burn.exe *.o
+
+%.o:%.cpp
+	$(CC) $(CPPFLAGS) -c -o $@ $<
+

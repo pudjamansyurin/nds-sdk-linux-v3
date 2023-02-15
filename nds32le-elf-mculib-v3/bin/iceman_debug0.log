@@ -1,0 +1,6 @@
+iceman_debug0.log
+User : 105 1 command.c:546 command_print(): debug_level: 2
+User : 111 1 command.c:694 command_run_line(): /opt/andes-sdk/ice/openocd.cfg:11: Error: invalid command name "nds"
+in procedure 'script' 
+at file "embedded:startup.tcl", line 60
+at file "/opt/andes-sdk/ice/openocd.cfg", line 11

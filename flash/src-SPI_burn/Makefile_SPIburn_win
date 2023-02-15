@@ -1,0 +1,34 @@
+#
+# Makefile for Burner
+#
+BUILD_ID = "`date +%Y%m%d%H`"
+
+# For Windows platform with MinGW
+CC = i386-mingw32-gcc
+RM = rm -f
+AR = i386-mingw32-ar
+CFLAGS += -g0 -O2 -Wall -DSPI_BURN -DBUILD_ID=$(BUILD_ID) -DWINVER=WindowsXP
+LIBS = -lws2_32 -lwsock32 -lm -lgdi32 -luser32 -lcfgmgr32 -lsetupapi -lcomctl32
+
+
+CPPFLAGS = $(CFLAGS) 
+
+srcdir = $(shell pwd)
+
+OBJS =	$(srcdir)/util.o \
+	$(srcdir)/main.o \
+	$(srcdir)/platform.o \
+	$(srcdir)/spiflash-MXIC.o
+
+
+all: SPI_burn.exe
+
+SPI_burn.exe: $(OBJS)
+	$(CC) -static -o $@ $(CPPFLAGS) $(OBJS) $(LIBS)
+
+clean:
+	rm -f SPI_burn.exe *.o
+
+%.o:%.cpp
+	$(CC) $(CPPFLAGS) -c -o $@ $<
+

@@ -1,0 +1,35 @@
+#
+# Makefile for Burner
+#
+BUILD_ID = "`date +%Y%m%d%H`"
+
+# For Linux platform
+CC = gcc
+RM = rm -f
+AR = ar
+CFLAGS += -g0 -O2 -Wall -DBUILD_ID=$(BUILD_ID) -DCYG
+LIBS = -lm -lrt #-L/usr/lib64
+
+
+CPPFLAGS = $(CFLAGS) 
+
+srcdir = $(shell pwd)
+
+OBJS =	$(srcdir)/util.o \
+	$(srcdir)/main.o \
+	$(srcdir)/platform-ag101p.o \
+	$(srcdir)/smcflash-IntelJ3.o \
+	$(srcdir)/smcflash-Micron.o
+
+
+all: IntelJ3
+
+IntelJ3: $(OBJS)
+	$(CC) -static -o $@ $(CPPFLAGS) $(OBJS) $(LIBS)
+
+clean:
+	rm -f IntelJ3 *.o
+
+%.o:%.cpp
+	$(CC) $(CPPFLAGS) -c -o $@ $<
+
